@@ -1,5 +1,4 @@
 module.exports.run = async (bot, message, args) => {
-  if(!permCheck(message)) return error.noPerms(message, cmdInfo.permission.group + "." + cmdInfo.permission.perm)
   const Rank = GuildsConfig[message.guild.id].Ranks.ranks;
   let subSection = args[0];
   if(!Rank) {

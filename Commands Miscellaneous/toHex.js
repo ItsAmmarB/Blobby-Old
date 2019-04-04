@@ -1,6 +1,4 @@
 module.exports.run = async (bot, message, args) => {
-    if(!permCheck(message)) return error.noPerms(message, cmdInfo.permission.group + "." + cmdInfo.permission.perm)
-
     let decNum = args.join(" ");
     if(!decNum) return help.helpMessage(message);
 
@@ -25,10 +23,10 @@ exports.information = {
     },
     permission: {
       perm: "toHex",
-      group: "Member"
+      group: "User"
     },
     help: {
-        name: "To Hex",
+        name: "ToHex",
         description: "Coverts a decimal number to hex number",
         usage: "[Decimal number]",
         examples: ["76561198259630538", "76561198151879943"]

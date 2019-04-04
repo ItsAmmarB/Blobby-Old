@@ -1,6 +1,4 @@
 module.exports.run = async (bot, message, args) => {
-  if(!permCheck(message)) return error.noPerms(message, cmdInfo.permission.group + "." + cmdInfo.permission.perm)
-
   const msgdel = args[0];
 
   if(!msgdel) return help.helpMessage(message);
@@ -15,7 +13,7 @@ module.exports.run = async (bot, message, args) => {
             });
       } catch(e) {
         let cErr = e.toString().split(":").slice(1)
-        error.fetal(message, cErr)
+        error.error(message, "Fatel Error", cErr)
       }
   };
 
@@ -28,12 +26,10 @@ module.exports.run = async (bot, message, args) => {
               await message.channel.bulkDelete(msgs);
               await success.clean(message, msgdel + " Messages");
                 return;
-                await success.clean(message, msgdel + " Messages");
-              return;
             });
       } catch(e) {
         let cErr = e.toString().split(":").slice(1)
-        error.fetal(message, cErr)
+        error.error(message, "Fatel Error", cErr)
       }
   };
 
@@ -63,7 +59,7 @@ module.exports.run = async (bot, message, args) => {
             });
     } catch(e) {
       let cErr = e.toString().split(":").slice(1)
-      error.fetal(message, cErr)
+      error.error(message, "Fatel Error", cErr)
     }
   };
 
@@ -82,7 +78,7 @@ module.exports.run = async (bot, message, args) => {
             });
     } catch(e) {
       let cErr = e.toString().split(":").slice(1)
-      error.fetal(message, cErr)
+      error.error(message, "Fatel Error", cErr)
     }
   };
 
@@ -102,7 +98,7 @@ module.exports.run = async (bot, message, args) => {
             });
     } catch(e) {
       let cErr = e.toString().split(":").slice(1)
-      error.fetal(message, cErr)
+      error.error(message, "Fatel Error", cErr)
     }
   };
 
@@ -140,7 +136,7 @@ module.exports.run = async (bot, message, args) => {
             });
     } catch(e) {
       let cErr = e.toString().split(":").slice(1)
-      error.fetal(message, cErr)
+      error.error(message, "Fatel Error", cErr)
     }
   };
 
@@ -163,7 +159,7 @@ module.exports.run = async (bot, message, args) => {
             });
     } catch(e) {
       let cErr = e.toString().split(":").slice(1)
-      error.fetal(message, cErr)
+      error.error(message, "Fatel Error", cErr)
     }
   };
 
@@ -187,7 +183,7 @@ module.exports.run = async (bot, message, args) => {
             });
     } catch(e) {
       let cErr = e.toString().split(":").slice(1)
-      error.fetal(message, cErr)
+      error.error(message, "Fatel Error", cErr)
     }
   };
 
@@ -239,7 +235,7 @@ module.exports.run = async (bot, message, args) => {
       });
     } catch(e) {
       let cErr = e.toString().split(":").slice(1)
-      error.fetal(message, cErr)
+      error.error(message, "Fatel Error", cErr)
     }
 
   };

@@ -1,5 +1,4 @@
 module.exports.run = async (bot, message, args) => {
-  if(!permCheck(message)) return error.noPerms(message, cmdInfo.permission.group + "." + cmdInfo.permission.perm)  
     let = subSection = args[0]
     if(!subSection) {
         if(guilds[message.guild.id].loop === 2) {
@@ -44,7 +43,7 @@ exports.information = {
     aliases: "lp",
     },
     permission: {
-    perm: "Play",
+    perm: "loop",
     group: "Member"
     },
     help: {

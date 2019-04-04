@@ -1,5 +1,4 @@
 module.exports.run = async (bot, message, args) => {
-  if(!permCheck(message)) return error.noPerms(message, cmdInfo.permission.group + "." + cmdInfo.permission.perm)
   const member = message.guild.member(message.mentions.users.first()) || message.guild.members.get(args[0]) || message.member;
   if(args[0] && args[0].toLowerCase() === "help") return help.helpMessage(message);
   if(!member) return error.invalid(message, "User", "User annot be found")
@@ -19,7 +18,7 @@ exports.information = {
   },
   permission: {
     perm: "avatar",
-    group: "Member"
+    group: "User"
   },
   help: {
     name: "Avatar",

@@ -16,19 +16,19 @@ module.exports.run = async function run(bot, message, args) {
               } else if(user.username) {
                 uName = user.username
               }
-              success.userBannedWithRecord(message, uName, reason)
+              success.userBannedWithoutRecord(message, uName, reason)
             })
           return;
         }
       }
       if(!mName.bannable) return error.unable(message, "Ban", mName.user.username, "User has ownership of this guild")
       if(mName.hasPermission("ADMINISTRATOR")) return error.unable(message, "Ban", mName.displayName, "User has admin perms")
-      if(mName.id === "357842475328733186") return error.unable(message, "Ban", "I can't ban my ban developers!")
       let reason = args.slice(1).join(" ")
       console.log(reason)
       if(!reason) reason = "No reason provided";
-      let embed = new Discord.RichEmbed()
-        .setDescription(`You have been Banned from \`\`${message.guild.name}\`\` by \`\`${message.author.tag}\`\` For \`\`${reason}\`\``)
+      if(reason !== "No reason provided") {
+        let embed = new Discord.RichEmbed()
+        .setDescription(`You have been Banned from \`\`${message.guild.name}\`\` by \`\`${message.member.displayName}\`\` For \`\`${reason}\`\``)
         .setFooter(`Banned At ${moment.utc(Date.now()).format("ddd, MMM Do YYYY, HH:mm:ss")}`)
         .setColor("#d63431");
       try{ 
@@ -52,14 +52,25 @@ module.exports.run = async function run(bot, message, args) {
             }
           } 
         },
-        { strict: false },
-        (err, res) => {
-          console.log(res)
-        }
+        { strict: false }
       )
       User.save
       success.userBannedWithRecord(message, mName.displayName, reason)
       mName.ban(reason);
+      } else {
+        let embed = new Discord.RichEmbed()
+        .setDescription(`You have been Banned from \`\`${message.guild.name}\`\` by \`\`${message.member.displayName}\`\` For \`\`${reason}\`\``)
+        .setFooter(`Banned At ${moment.utc(Date.now()).format("ddd, MMM Do YYYY, HH:mm:ss")}`)
+        .setColor("#d63431");
+      try{ 
+        await mName.send(embed)
+      } catch(err) {
+        console.log(`[Error] Couldn\'t message ${mName.user.tag} of his ban in ${message.guild.name}!`)
+      };
+      success.userBannedWithoutRecord(message, mName.displayName, reason)
+      mName.ban(reason);
+      }
+     
       return;
     } else {
       let mName = message.mentions.members.first() || message.guild.members.get(args[0]);
@@ -88,7 +99,7 @@ module.exports.run = async function run(bot, message, args) {
         if(!reason) reason = "No reason provided!"
         console.log(reason)
         let embed = new Discord.RichEmbed()
-        .setDescription(`You have been Banned from \`\`${message.guild.name}\`\` by \`\`${message.author.tag}\`\` For \`\`${reason}\`\``)
+        .setDescription(`You have been Banned from \`\`${message.guild.name}\`\` by \`\`${message.member.displayName}\`\` For \`\`${reason}\`\``)
         .setFooter(`Banned At ${moment.utc(Date.now()).format("ddd, MMM Do YYYY, HH:mm:ss")}`)
         .setColor("#d63431");
       try{ 

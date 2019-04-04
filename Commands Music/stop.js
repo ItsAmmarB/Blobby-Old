@@ -1,6 +1,4 @@
 module.exports.run = async (bot, message, args) => {
-  if(!permCheck(message)) return error.noPerms(message, cmdInfo.permission.group + "." + cmdInfo.permission.perm)
-    if(message.member.voiceChannelID !== message.guild.members.get(bot.user.id).voiceChannelID) return error.invalid(message, "Stop", "You must in the channel with the bot to stop it!")
     guilds[message.guild.id].queue = [];
     guilds[message.guild.id].queueNames = [];
     guilds[message.guild.id].isPlaying = false;
@@ -16,22 +14,13 @@ module.exports.run = async (bot, message, args) => {
 
 }
 
-exports.help = {
-    name: "stop",
-    aliases: "stp",
-    hName: "Stop",
-    Description: "Stops the steam and clear the queue then leave the channel",
-    usage: "　",
-    permission: "mod.stop"
-  };
-
 exports.information = {
     trigger: {
     name: "stop",
     aliases: "stp",
     },
     permission: {
-    perm: "Play",
+    perm: "skip",
     group: "Member"
     },
     help: {

@@ -1,6 +1,4 @@
 module.exports.run = async (bot, message, args) => {
-  if(!permCheck(message)) return error.noPerms(message, cmdInfo.permission.group + "." + cmdInfo.permission.perm)
-
   if(!message.guild.owner.nickname) {
     nick = "No nickname"
   } else {
@@ -54,7 +52,7 @@ exports.information = {
   },
   permission: {
     perm: "serverInfo",
-    group: "Mod"
+    group: "Admin"
   },
   help: {
     name: "ServerInfo",

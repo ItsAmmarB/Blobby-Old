@@ -1,5 +1,4 @@
 exports.run = async (bot, message, args) => {
-  if(!permCheck(message)) return error.noPerms(message, cmdInfo.permission.group + "." + cmdInfo.permission.perm)
     if(!args[0]) return help.helpMessage(message)
     let mName = message.mentions.members.first() || message.guild.members.get(args[0]);
     if(!mName) return error.invalid(message, "mName", "Member cannot be found")

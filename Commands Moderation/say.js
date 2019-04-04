@@ -1,5 +1,4 @@
 module.exports.run = async (bot, message, args) => {
-  if(!permCheck(message)) return error.noPerms(message, cmdInfo.permission.group + "." + cmdInfo.permission.perm)
   const sayMessage = args.join(" ");
   
   message.channel.send(sayMessage)

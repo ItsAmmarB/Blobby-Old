@@ -1,5 +1,4 @@
 module.exports.run = async (bot, message, args) => {
-	if(!permCheck(message)) return error.noPerms(message, cmdInfo.permission.group + "." + cmdInfo.permission.perm)
 
     let XP = JSON.parse(fs.readFileSync("./XP.json", "utf8"));
 
@@ -29,7 +28,7 @@ exports.information = {
 	},
 	permission: {
 	  perm: "leaderboard",
-	  group: "Member"
+	  group: "User"
 	},
 	help: {
 		name: "Leaderboard",

@@ -1,5 +1,4 @@
 module.exports.run = async (bot, message, args) => {
-  if(!permCheck(message)) return error.noPerms(message, cmdInfo.permission.group + "." + cmdInfo.permission.perm)
     if(!guilds[message.guild.id].isPlaying) return error.invalid(message, "Pause", "There is no active stream in this guild")
 guilds[message.guild.id].isPlaying = false;
 message.guild.voiceConnection.dispatcher.pause()

@@ -1,5 +1,4 @@
 module.exports.run = async (bot, message, args) => {
-  if(!permCheck(message)) return error.noPerms(message, cmdInfo.permission.group + "." + cmdInfo.permission.perm)
   if(!args[0]) return help.helpMessage(message)
   const mName = message.guild.member(message.mentions.users.first()) || message.guild.members.get(args[0]) || message.guild.members.find("name", args[0]);
   if(!mName) return error.invalid(message, "mName", "User cannot be found")

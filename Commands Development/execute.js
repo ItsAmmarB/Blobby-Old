@@ -1,22 +1,23 @@
 module.exports.run = async (bot, message, args) => {
-        eval(args.join(" ")).catch(err => console.log(err))
+  try{
+  eval(args.join(" ")) 
+    } catch(err) {
+      error.error(message, "Error", err)
+    }
 };
 
 exports.information = {
   trigger: {
   name: "execute",
-  aliases: "test",
+  aliases: "exec",
   },
   permission: {
-  perm: "execute",
-  group: "execute"
+  permLevel: "Junior Developer",
   },
   help: {
-  name: "Mute",
-  description: "Mutes a member in all server channels\n• Note: maximum duration is 3 Weeks.\nDuration shortcuts:\ns = Seconds  m = Minutes  h = Hours\nd = Days  w = Weeks",
-  usage: "<User> <Duration>",
-  examples: ["test"," 1h"]
+  name: "Execute",
+  description: "Execute a code using eval function.",
+  usage: "<Code>",
+  examples: ["message.reply('Hi')","console.log(bot.user.username)"]
   }
 }
-
-

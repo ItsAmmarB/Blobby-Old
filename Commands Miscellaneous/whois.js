@@ -1,7 +1,4 @@
 module.exports.run = async (bot, message, args) => {
-  if(!permCheck(message)) return error.noPerms(message, cmdInfo.permission.group + "." + cmdInfo.permission.perm)
-
-
   const status = {
     online: "Online",
     idle: "Idle",
@@ -61,7 +58,7 @@ exports.information = {
   },
   permission: {
     perm: "whoIs",
-    group: "Mod"
+    group: "Admin"
   },
   help: {
     name: "whois",

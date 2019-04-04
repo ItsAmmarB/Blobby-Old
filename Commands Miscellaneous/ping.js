@@ -1,6 +1,4 @@
 module.exports.run = async (bot, message, args) => {
-  if(!permCheck(message)) return error.noPerms(message, cmdInfo.permission.group + "." + cmdInfo.permission.perm)
-
   message.channel.send(new Discord.RichEmbed()
 	.setAuthor("Ping")
 	.setDescription("Current Ping is: " + JSON.stringify(bot.ping).split(".").slice(0, 1) + " ms")
@@ -16,7 +14,7 @@ module.exports.run = async (bot, message, args) => {
     },
     permission: {
       perm: "ping",
-      group: "Member"
+      group: "User"
     },
     help: {
       name: "Ping",

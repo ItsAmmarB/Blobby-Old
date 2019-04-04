@@ -1,6 +1,4 @@
 module.exports.run = async (bot, message, args) => {
-    if(!permCheck(message)) return error.noPerms(message, cmdInfo.permission.group + "." + cmdInfo.permission.perm)
-
     if(!guilds[message.guild.id]) return error.invalid(message, "Volume", "There is no active stream in this guild")
     if(!args[0]) return message.channel.send(new Discord.RichEmbed()
         .setTitle("Volume")
@@ -14,22 +12,13 @@ module.exports.run = async (bot, message, args) => {
     success.vChange(message, args[0])
 }
 
-exports.help = {
-    name: "volume",
-    aliases: "v",
-    hName: "Volume",
-    Description: "Changes the volume of the stream",
-    usage: "[Amount 1-10]",
-    permission: "mod.volume"
-  };
-
   exports.information = {
       trigger: {
-      name: "colume",
-      aliases: "c",
+      name: "volume",
+      aliases: "v",
       },
       permission: {
-      perm: "Play",
+      perm: "volume",
       group: "Member"
       },
       help: {

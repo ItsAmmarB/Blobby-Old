@@ -1,5 +1,4 @@
 module.exports.run = async (bot, message, args) => {
-  if(!permCheck(message)) return error.noPerms(message, cmdInfo.permission.group + "." + cmdInfo.permission.perm)
   let mName = message.mentions.members.first() || message.guild.members.get(args[0]);
   if(!mName) return error.invalid(message, "mName", "User does not exist")
   let nName = args.slice(1).join(" ");
@@ -23,7 +22,7 @@ exports.information = {
   },
   permission: {
   perm: "SetNick",
-  group: ""
+  group: "Admin"
   },
   help: {
   name: "SetNick",

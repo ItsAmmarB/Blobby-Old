@@ -1,6 +1,4 @@
 module.exports.run = async (bot, message, args) => {
-	if(!permCheck(message)) return error.noPerms(message, cmdInfo.permission.group + "." + cmdInfo.permission.perm)
-
 	let steamURL = args[0];
 
 	if(!steamURL) return help.helpMessage(message);
@@ -53,7 +51,7 @@ exports.information = {
 	},
 	permission: {
 	  perm: "steam",
-	  group: "Member"
+	  group: "User"
 	},
 	help: {
 		name: "Steam",

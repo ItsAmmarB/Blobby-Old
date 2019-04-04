@@ -4,9 +4,7 @@ const guildSchema = mongoose.Schema({
     _id: String,
     guildInfo: {
         guildID: String,
-        position: String,
         guildCreatedAtTimestamp: String,
-
     },
     guildSettings: {
         prefix: String,
@@ -16,10 +14,10 @@ const guildSchema = mongoose.Schema({
         cashSystem: Object,
         automodSysten: Object,
         permissionsMap:{
-            users: Object,
-            roles: Object,
-        }
+            users: Array,
+            roles: Array
+        }, 
+        fiveMServers: Array
     }
-
 });
 module.exports = mongoose.model("Guild", guildSchema)

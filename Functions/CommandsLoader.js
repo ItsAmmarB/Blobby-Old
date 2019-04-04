@@ -90,10 +90,27 @@ module.exports.Development = async (path) => {
         jsFiles.forEach((f, i) => {
           let props = require(`.${path}/${f}`);
           console.log(`${i + 1}: ${f} loaded!`)
-          bot.devCommand.set(props.information.trigger.name, props);
+          bot.devCommands.set(props.information.trigger.name, props);
           bot.devAliases.set(props.information.trigger.aliases, props);
         });
       });
 }
 
- 
+module.exports.Testing = async (path) => {
+  await fs.readdir(path, (err, files) => {
+      if(err) console.error(err);
+      let jsFiles = files.filter(f => f.split(".").pop() === "js");
+      if(jsFiles.length <= 0) {
+        console.log("==> No Testing commands to load!");
+        return;
+      }
+      console.log(`==> loading ${jsFiles.length} testing commands!`)
+  
+      jsFiles.forEach((f, i) => {
+        let props = require(`.${path}/${f}`);
+        console.log(`${i + 1}: ${f} loaded!`)
+        bot.testCommands.set(props.information.trigger.name, props);
+        bot.testAliases.set(props.information.trigger.aliases, props);
+      });
+    });
+}

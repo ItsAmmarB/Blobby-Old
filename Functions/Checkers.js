@@ -1,21 +1,156 @@
-module.exports.permCheck = (message) => {
-  let reqPerm = cmdInfo.permission.perm
-
-  if(message.member.hasPermission(["ADMINISTRATOR"])) return true;   
-  Member.findOne({"userInfo.userID": message.author.id}, (err, res) =>{
-      if(err) console.log(err)
-      if(res.memberInfo.perms.includes(reqPerm)) return true;
-  })
-  let filterdRoles = message.member.roles.filter(role => {Role.findOne({"roleInfo.roleID": role.id})})
-  if(JSON.stringify(filterdRoles).split("").length < 3) return false;
-  filterdRoles.filter(role => {
-      Role.findOne({"roleInfo.roleID": role.id}, (err, res) => {
-          if(res.roleDetails.perms.includes(reqPerm)) return true;
+module.exports.permCheck = (message, callback) => {
+  let reqPerm = cmdInfo.permission.perm;
+if(message.member.hasPermission(["ADMINISTRATOR"])) return callback(true);
+Guild.findOne({_id: message.guild.id, "guildSettings.permissionsMap.users.userID": message.author.id})
+  .then(res => {
+    if(res) {
+      if(res.guildSettings.permissionsMap.users.find(user => user.userID === message.author.id).permissions.includes(reqPerm)) {
+        return callback(true)
+      } else {
+        Guild.findOne({_id: message.guild.id})
+        .then(res => {
+          try {
+            res.guildSettings.permissionsMap.roles.find(role => role.roleID === message.member.roles.find(role2 => role2.id === role.roleID).id)
+          } catch(err){
+            return callback(false)
+          }
+          if(res.guildSettings.permissionsMap.roles.find(role => role.roleID === message.member.roles.find(role2 => role2.id === role.roleID).id).permissions.includes(reqPerm)) {
+            return callback(true)
+          } else {
+            return callback(false)
+          }
+        })
+      }
+    } else {
+    Guild.findOne({_id: message.guild.id})
+      .then(res => {
+        if(res.guildSettings.permissionsMap.roles.find(role => role.roleID === message.member.roles.find(role2 => role2.id === role.roleID).id) === undefined || !res.guildSettings.permissionsMap.roles.find(role => role.roleID === message.member.roles.find(role2 => role2.id === role.roleID).id)) {
+          return callback(false)
+        } else {
+          if(res.guildSettings.permissionsMap.roles.find(role => role.roleID === message.member.roles.find(role2 => role2.id === role.roleID).id).permissions.includes(reqPerm)) {
+            return callback(true)
+          } else {
+            return callback(false)
+          }
+        }
       })
+    }
   })
-  return false;
 }
 
+module.exports.permCheckDev = (message, callback) => {
+  Privilege.findOne({_id: message.author.id})
+  .then(res => {
+    if(res){
+      if(res.privileges.find(priv => priv.permissions.includes(cmdInfo.permission.permLevel))) {
+        return callback(true)
+      } else {
+        Privilege.findOne({_id: message.author.id})
+        .then(res => {
+          if(res){
+            if(res.privileges.find(priv => priv.permissions.includes(cmdInfo.permission.permLevel))) {
+              return callback(true)
+            } else {
+              return callback(false)
+            }
+          } else {
+            return callback(false)
+          }
+        })
+      }
+    } else {
+      Privilege.findOne({_id: message.author.id})
+      .then(res => {
+        if(res){
+          if(res.privileges.find(priv => priv.permissions.includes(cmdInfo.permission.permLevel))) {
+            return callback(true)
+          } else {
+            return callback(false)
+          }
+        } else {
+          return callback(false)
+        }
+      })
+    }
+  })
+}
+
+module.exports.permCheckTest = (message, callback) => {
+  Privilege.findOne({_id: message.author.id})
+  .then(res => {
+    if(res){
+      if(res.privileges.find(priv => priv.permissions.includes(cmdInfo.permission.permLevel))) {
+        return callback(true)
+      } else {
+        Privilege.findOne({_id: message.author.id})
+        .then(res => {
+          if(res){
+            if(res.privileges.find(priv => priv.permissions.includes(cmdInfo.permission.permLevel))) {
+              return callback(true)
+            } else {
+              Privilege.findOne({_id: message.author.id})
+              .then(res => {
+                if(res){
+                  if(res.privileges.find(priv => priv.permissions.includes(cmdInfo.permission.permLevel))) {
+                    return callback(true)
+                  } else {
+                    return callback(false)
+                  }
+                } else {
+                  return callback(false)
+                }
+              })
+            }
+          } else {
+            Privilege.findOne({_id: message.author.id})
+            .then(res => {
+              if(res){
+                return callback(true)
+              } else {
+                return callback(false)
+              }
+            })
+          }
+        })
+      }
+    } else {
+      Privilege.findOne({_id: message.author.id})
+        .then(res => {
+          if(res){
+            if(res.privileges.find(priv => priv.permissions.includes(cmdInfo.permission.permLevel))) {
+              return callback(true)
+            } else {
+              Privilege.findOne({_id: message.author.id})
+              .then(res => {
+                if(res){
+                  if(res.privileges.find(priv => priv.permissions.includes(cmdInfo.permission.permLevel))) {
+                    return callback(true)
+                  } else {
+                    return callback(false)
+                  }
+                } else {
+                  return callback(false)
+                }
+              })
+            }
+          } else {
+            Privilege.findOne({_id: message.author.id})
+            .then(res => {
+              if(res){
+                if(res.privileges.find(priv => priv.permissions.includes(cmdInfo.permission.permLevel))) {
+                  return callback(true)
+                } else {
+                  return callback(false)
+                }
+              } else {
+                return callback(false)
+              }
+            })
+          }
+        })
+    }
+  })
+}
 
 module.exports.modifierCheck = (message, callback) => {
  let subCommand = message.content.split(" ").slice(2)
@@ -37,7 +172,6 @@ module.exports.modifierCheck = (message, callback) => {
         } else {
           return callback("Error: Unknown modifier requested.")
         }
-
       }
     } else {
         return callback("Error: Unknown modifier requested.")

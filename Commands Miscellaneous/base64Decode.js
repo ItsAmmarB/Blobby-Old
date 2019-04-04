@@ -1,5 +1,4 @@
 module.exports.run = async (bot, message, args) => {
-    if(!permCheck(message)) return error.noPerms(message, cmdInfo.permission.group + "." + cmdInfo.permission.perm)
     let code = args.join(" ");
     if(!code) return help.helpMessage(message);
     let embed = new Discord.RichEmbed()
@@ -17,7 +16,7 @@ exports.information = {
     },
     permission: {
         perm: "base64Decode",
-        group: "Member"
+        group: "User"
     },
     help: {
         name: "Decode",

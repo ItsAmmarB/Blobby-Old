@@ -1,5 +1,4 @@
 module.exports.run = async (bot, message, args) => {
-    if(!permCheck(message)) return error.noPerms(message, cmdInfo.permission.group + "." + cmdInfo.permission.perm)
     if(!args[0]) return help.helpMessage(message)
     if(!args.includes("-")) return error.invalid(message, "Lyrics", "You need to seperate the Author name and the Song name with '-'")
     let artist = args.join(" ").split("-").slice(0, 1)
@@ -103,7 +102,7 @@ exports.information = {
     },
     permission: {
         perm: "lyrics",
-        group: "Member"
+        group: "User"
     },
     help: {
         name: "Lyrics",

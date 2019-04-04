@@ -1,5 +1,4 @@
 module.exports.run = async (bot, message, args) => {
-  if(!permCheck(message)) return error.noPerms(message, cmdInfo.permission.group + "." + cmdInfo.permission.perm)
     let subsection = args[0];
     if(!subsection) {
         if(guilds[message.guild.id].queueNames.length === 0) return message.channel.send(new Discord.RichEmbed()
@@ -68,7 +67,7 @@ exports.information = {
     aliases: "q",
     },
     permission: {
-    perm: "Play",
+    perm: "queue",
     group: "Member"
     },
     help: {

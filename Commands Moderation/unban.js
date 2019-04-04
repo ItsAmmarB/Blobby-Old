@@ -1,5 +1,4 @@
 module.exports.run = async (bot, message, args) => {
-  if(!permCheck(message)) return error.noPerms(message, cmdInfo.permission.group + "." + cmdInfo.permission.perm)
   if(!args[0] || args[0].toUpperCase() === "HELP") return help.helpMessage(message)
   let mID = args[0];
   if(args[0].length < 18) return error.invalid(message, "uID", "User ID does not exist")

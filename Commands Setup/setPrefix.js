@@ -1,12 +1,16 @@
 module.exports.run = async (bot, message, args) => {
-  if(!permCheck(message)) return error.noPerms(message, cmdInfo.permission.group + "." + cmdInfo.permission.perm)
-  let newPrefix = args[0];
-  if(!newPrefix) return help.helpMessage(message, "SetPrefix", "Changes the prefix of the guild", "<Desired Prefix>", "!", "?")
-  if(newPrefix === GuildsConfig[message.guild.id].Prefix) return error.invalid(message, "newPrefix", "Prefix is already set to  " + nPrefix)
-  GuildsConfig[message.guild.id].Prefix = newPrefix;
-  fs.writeFile("./GuildsConfig.json", JSON.stringify(GuildsConfig), err => {
-    if(err) throw err;});
-  success.prefixChange(message, "Prefix", newPrefix)
+  Guild.findOne({_id: message.guild.id}, (err, res) => {
+    let newPrefix = args[0];
+    if(!newPrefix) return help.helpMessage(message, "SetPrefix", "Changes the prefix of the guild", "<Desired Prefix>", "!", "?")
+    if(newPrefix === res.guildSettings.prefix) return error.invalid(message, "newPrefix", "Prefix is already set to  " + newPrefix)
+    Guild.updateOne({_id: message.guild.id}, {
+      $set: {
+        "guildSettings.prefix": newPrefix
+      }
+    }, (err, res) => {if(err) console.log(err)})
+    Guild.save
+    success.prefixChange(message, newPrefix)
+  })
 };
 
 

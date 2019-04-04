@@ -1,6 +1,4 @@
 module.exports.run = async (bot, message, args) => {
-  if(!permCheck(message)) return error.noPerms(message, cmdInfo.permission.group + "." + cmdInfo.permission.perm)
-
 	let section = args[0] || "help";
 	let prams = args.slice(1).join(" ")
 	if(isNaN(section) && message.guild.member(message.mentions.users.first())){

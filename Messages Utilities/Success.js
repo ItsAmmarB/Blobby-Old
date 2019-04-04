@@ -3,17 +3,23 @@ const fs = require('fs');
 const sColor = "#417af4"
 
 
-module.exports.permsActions = (message, action, target, permission) => {
+module.exports.permsGained = (message, target, permission) => {
 	let embed = new Discord.RichEmbed()
-        .setDescription(`${target} ${action} the ${permission} permission! `)
+        .setDescription(`${target} has Gained \`\`${permission} \`\` permission! `)
         .setColor(sColor)
 
 
 message.channel.send(embed)
 }
 
+module.exports.permsRevoked = (message, target, permission) => {
+	let embed = new Discord.RichEmbed()
+        .setDescription(`${target}'s \`\`${permission} \`\` permission Revoked! `)
+        .setColor(sColor)
 
 
+message.channel.send(embed)
+}
 
 //===================================================Channel Actions
 
@@ -154,18 +160,18 @@ message.channel.send(embed)
 
 //===================================================FiveM 
 
-module.exports.fmSet = (message, IP, guildName) => {
+module.exports.addFiveM = (message, sName, sIP) => {
         let embed = new Discord.RichEmbed()
-        .setDescription("The server with the IP of ``" + IP + "`` Has been set as " + guildName + "'s FiveM server!")
+        .setDescription("The FiveM server with the IP of "+ sIP + " has been saved in the guild database as ``" + sName +"``!")
         .setColor(sColor)
 
 
 message.channel.send(embed)
 }
 
-module.exports.fmSet = (message, guildName) => {
+module.exports.delFiveM = (message, sName) => {
         let embed = new Discord.RichEmbed()
-        .setDescription(guildName + "'s FiveM server has been reset!")
+        .setDescription("The FiveM server with the name of "+ sName + " has been deleted from the guild database!")
         .setColor(sColor)
 
 
@@ -207,7 +213,47 @@ message.channel.send(embed)
 }
 
 
-//===================================================Mute, Unmute
+
+
+//===================================================Ban, Kick, Mute, Unmute
+
+module.exports.userBannedWithRecord = (message, mName, reason) => {
+        let embed = new Discord.RichEmbed()
+        .setDescription(`\`\`${mName}\`\`` + " has been banned for ``" + reason + "``")
+        .setFooter("This action has been logged to database")
+        .setColor(sColor)
+
+
+message.channel.send(embed)
+}
+
+module.exports.userBannedWithoutRecord = (message, mName, reason) => {
+        let embed = new Discord.RichEmbed()
+        .setDescription(`\`\`${mName}\`\`` + " has been banned for ``" + reason + "``")
+        .setColor(sColor)
+
+
+message.channel.send(embed)
+}
+
+module.exports.userKickedWithRecord = (message, mName, reason) => {
+        let embed = new Discord.RichEmbed()
+        .setDescription(`\`\`${mName}\`\`` + " has been kicked for ``" + reason + "``")
+        .setFooter("This action has been logged to database")
+        .setColor(sColor)
+
+
+message.channel.send(embed)
+}
+
+module.exports.userKickedWithoutRecord = (message, mName, reason) => {
+        let embed = new Discord.RichEmbed()
+        .setDescription(`\`\`${mName}\`\`` + " has been kicked for ``" + reason + "``")
+        .setColor(sColor)
+
+
+message.channel.send(embed)
+}
 
 module.exports.mute = (message, member, duration) => {
         let embed = new Discord.RichEmbed()
@@ -227,22 +273,18 @@ module.exports.unmute = (message, member) => {
 message.channel.send(embed)
 }
 
-
-//===================================================Mute, Unmute
-
-module.exports.userBannedWithRecord = (message, mName, reason) => {
+module.exports.clean = (message, msgcount, ) => {
         let embed = new Discord.RichEmbed()
-        .setDescription(`\`\`${mName}\`\`` + " has been banned for ``" + reason + "``")
-        .setFooter("This action has been recorded and logged to database")
+        .setDescription("Cleaned " + msgcount + "!")
         .setColor(sColor)
 
 
-message.channel.send(embed)
+message.channel.send(embed).then(m => m.delete(10000))
 }
 
-module.exports.userBannedWithoutRecord = (message, mName, reason) => {
+module.exports.prefixChange = (message, nPrefix) => {
         let embed = new Discord.RichEmbed()
-        .setDescription(`\`\`${mName}\`\`` + " has been banned for ``" + reason + "``")
+        .setDescription("Server prefix has been changed to ``" + nPrefix + "`` database has been edited!")
         .setColor(sColor)
 
 

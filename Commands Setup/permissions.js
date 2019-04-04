@@ -14,55 +14,59 @@ module.exports.run = async (bot, message, args) => {
     }
     let permissionKey = args[2];
     if(!permissionKey) return error.missing(message, "PermissionKey");
-    let commandPermission = bot.commands.filter(command => command.information.permission.perm.toString().toLowerCase() === permissionKey.toLowerCase()).first();
+    let commandPermission = bot.norCommands.filter(command => command.information.permission.perm.toString().toLowerCase() === permissionKey.toLowerCase()).first()
     if(!commandPermission) return error.invalid(message, "CommandPermission", "No command with provided permission could be found");
     if(targetType === "Member") {
-      Member.findOne({"userInfo.userID": target.id, "memberInfo.guildID": message.guild.id}, (err, res) => {
-        if(res.memberInfo.perms.includes(commandPermission.information.permission.perm.toString())) return error.invalid(message, "GainedPermission", "Target alread have this permission")
-        Member.findOneAndUpdate({"userInfo.userID": target.id, "memberInfo.guildID": message.guild.id},{
-          $push : {
-          "memberInfo.perms": commandPermission.information.permission.perm.toString()
-          }
-          },(err, res) =>{
-            if(err) console.log(err)
-          }, { strict: false })
-        Member.save
-        return success.permsActions(message, "gained", target.displayName, commandPermission.information.permission.perm.toString())
-      } )
-    } else {
-      await Role.findOne({"roleInfo.roleID": target.id, "roleInfo.guildID": message.guild.id}, async (err, res) => {
-        if(err) console.log(err)
-
-        if(!res) {
-          await newRole(target)
-          Role.findOneAndUpdate({"roleInfo.roleID": target.id},{
-            $push : {
-              "roleDetails.perms": commandPermission.information.permission.perm
-            }
-          },(err, res) =>{
-            if(err) console.log(err)
-          }, { strict: false })
-          Role.save
-          return success.permsActions(message, "gained", target.name, commandPermission.information.permission.perm.toString())
-        } else {
-          if(res.roleDetails.perms.includes(commandPermission.information.permission.perm.toString())) {
-            return error.invalid(message, "GainedPermission", "Target alread have this permission")
-          } else {
-            Role.findOneAndUpdate({"roleInfo.roleID": target.id},{
-              $push : {
-                "roleDetails.perms": commandPermission.information.permission.perm
+      Guild.findOne({ $and: [{_id: message.guild.id}, {"guildSettings.permissionsMap.users.userID": target.id}]})
+      .then((res) => {
+        if(!res || res === null) {
+           Guild.updateOne({_id: message.guild.id}, {
+            $push: {
+              "guildSettings.permissionsMap.users": {
+                userID: target.id,
+                permissions:[commandPermission.information.permission.perm.toString()]
               }
-            },(err, res) =>{
-              if(err) console.log(err)
-            }, { strict: false })
-            Role.save
-            return success.permsActions(message, "gained", target.name, commandPermission.information.permission.perm.toString())
-          }
+            }
+          }, (err, res) => {if(err) console.log(err); })
+        } else if(res.guildSettings.permissionsMap.users.find(user => user.userID === target.id).permissions.includes(commandPermission.information.permission.perm.toString())) {
+          return error.invalid(message, "GainedPermission", "Member already have this permission");
+        } else if(!res.guildSettings.permissionsMap.users.find(user => user.userID === target.id).permissions.includes(commandPermission.information.permission.perm.toString())){
+          Guild.updateOne({ $and: [{_id: message.guild.id}, {"guildSettings.permissionsMap.users.userID": target.id}]}, {
+            $push: {
+              "guildSettings.permissionsMap.users.$.permissions": commandPermission.information.permission.perm.toString()
+            }
+          }, (err, res) => {if(err) console.log(err); })
+          Guild.save
         }
+        return success.permsGained(message, target.displayName, commandPermission.information.permission.perm.toString());
+      })
+    } else {
+      Guild.findOne({ $and: [{_id: message.guild.id}, {"guildSettings.permissionsMap.roles.roleID": target.id}]})
+      .then((res) => {
+        if(!res || res === null) {
+           Guild.updateOne({_id: message.guild.id}, {
+            $push: {
+              "guildSettings.permissionsMap.roles": {
+                roleID: target.id,
+                permissions:[commandPermission.information.permission.perm.toString()]
+              }
+            }
+          }, (err, res) => {if(err) console.log(err); })
+        } else if(res.guildSettings.permissionsMap.roles.find(role => role.roleID === target.id).permissions.includes(commandPermission.information.permission.perm.toString())) {
+          return error.invalid(message, "GainedPermission", "Role already have this permission");
+        } else if(!res.guildSettings.permissionsMap.roles.find(role => role.roleID === target.id).permissions.includes(commandPermission.information.permission.perm.toString())){
+          Guild.updateOne({ $and: [{_id: message.guild.id}, {"guildSettings.permissionsMap.roles.roleID": target.id}]}, {
+            $push: {
+              "guildSettings.permissionsMap.roles.$.permissions": commandPermission.information.permission.perm.toString()
+            }
+          }, (err, res) => {if(err) console.log(err); })
+          Guild.save
+        }
+        return success.permsGained(message, target.name, commandPermission.information.permission.perm.toString());
       })
     }
-  }
-  if(subsections.toLowerCase() === "revoke" || subsections.toLowerCase() === "r") {
+  }                                                                                                   //Gain Access End 
+  else if(subsections.toLowerCase() === "revoke" || subsections.toLowerCase() === "r") {             //Revoke Access Start
     let target = message.guild.member(message.mentions.users.first()) || message.guild.members.get(args[1]) || message.mentions.roles.first() || message.guild.roles.get(args[1]);
     if(!args[1]) return error.missing(message, "Target");
     if(!target) return error.invalid(message, "Target", "The targeted role or member couldn't be found");
@@ -73,51 +77,64 @@ module.exports.run = async (bot, message, args) => {
     }
     let permissionKey = args[2];
     if(!permissionKey) return error.missing(message, "PermissionKey");
-    let commandPermission = bot.commands.filter(command => command.information.permission.perm.toString().toLowerCase() === permissionKey.toLowerCase()).first();
+    let commandPermission = bot.norCommands.filter(command => command.information.permission.perm.toString().toLowerCase() === permissionKey.toLowerCase()).first()
     if(!commandPermission) return error.invalid(message, "CommandPermission", "No command with provided permission could be found");
     if(targetType === "Member") {
-      Member.findOne({"userInfo.userID": target.id, "memberInfo.guildID": message.guild.id}, (err, res) => {
-        if(!res.memberInfo.perms.includes(commandPermission.information.permission.perm.toString())) return error.invalid(message, "RevokedPermission", "Target doesn't have this permission")
-        Member.findOneAndUpdate({"userInfo.userID": target.id, "memberInfo.guildID": message.guild.id},{
-          $pull : {
-          "memberInfo.perms": commandPermission.information.permission.perm.toString()
-          }
-          },(err, res) =>{
-            if(err) console.log(err)
-          }, { strict: false })
-        Member.save
-        return success.permsActions(message, "lost", target.displayName, commandPermission.information.permission.perm.toString())
-      } )
-    } else {
-      await Role.findOne({"roleInfo.roleID": target.id, "roleInfo.guildID": message.guild.id}, async (err, res) => {
-        if(err) console.log(err)
-
-        if(!res) {
-          await newRole(target)
-          Role.findOneAndUpdate({"roleInfo.roleID": target.id},{
-            $push : {
-              "roleDetails.perms": commandPermission.information.permission.perm
-            }
-          },(err, res) =>{
-            if(err) console.log(err)
-          }, { strict: false })
-          Role.save
-          return success.permsActions(message, "lost", target.name, commandPermission.information.permission.perm.toString())
-        } else {
-          if(!res.roleDetails.perms.includes(commandPermission.information.permission.perm.toString())) {
-            return error.invalid(message, "RevokedPermission", "Target doesn't have this permission")
-          } else {
-            Role.findOneAndUpdate({"roleInfo.roleID": target.id},{
-              $pull : {
-                "roleDetails.perms": commandPermission.information.permission.perm
+      Guild.findOne({ $and: [{_id: message.guild.id}, {"guildSettings.permissionsMap.users.userID": target.id}]})
+      .then((res) => {
+        if(!res || res === null) {
+          return error.invalid(message, "GainedPermission", "Member doesn't have this permission already");
+        } else if(res.guildSettings.permissionsMap.users.find(user => user.userID === target.id).permissions.includes(commandPermission.information.permission.perm.toString())) {
+          if(res.guildSettings.permissionsMap.users.find(user => user.userID === target.id).permissions.length < 2){          
+            Guild.updateOne({ $and: [{_id: message.guild.id}, {"guildSettings.permissionsMap.users.userID": target.id}]}, {
+              $pull: {
+                "guildSettings.permissionsMap.users": {
+                  userID: target.id,
+                  permissions:[commandPermission.information.permission.perm.toString()]
+                }
               }
-            },(err, res) =>{
-              if(err) console.log(err)
-            }, { strict: false })
-            Role.save
-            return success.permsActions(message, "lost", target.name, commandPermission.information.permission.perm.toString())
+            }, (err, res) => {if(err) console.log(err); })
+          } else {
+            Guild.updateOne({ $and: [{_id: message.guild.id}, {"guildSettings.permissionsMap.users.userID": target.id}]}, {
+              $pull: {
+                "guildSettings.permissionsMap.users.$.permissions": commandPermission.information.permission.perm.toString()
+              }
+            }, (err, res) => {if(err) console.log(err); })
           }
+
+        } else if(!res.guildSettings.permissionsMap.users.find(user => user.userID === target.id).permissions.includes(commandPermission.information.permission.perm.toString())){
+          return error.invalid(message, "GainedPermission", "Member doesn't have this permission already");
         }
+        return success.permsRevoked(message, target.displayName, commandPermission.information.permission.perm.toString());
+      })
+    }                                                   //Member Revoke Access End 
+    else {                                              //Role Revoke Access Start
+      Guild.findOne({ $and: [{_id: message.guild.id}, {"guildSettings.permissionsMap.roles.roleID": target.id}]})
+      .then((res) => {
+        if(!res || res === null) {
+          return error.invalid(message, "GainedPermission", "Role doesn't have this permission already");
+        } else if(res.guildSettings.permissionsMap.roles.find(role => role.roleID === target.id).permissions.includes(commandPermission.information.permission.perm.toString())) {
+          if(res.guildSettings.permissionsMap.roles.find(role => role.roleID === target.id).permissions.length < 2){          
+            Guild.updateOne({ $and: [{_id: message.guild.id}, {"guildSettings.permissionsMap.roles.roleID": target.id}]}, {
+              $pull: {
+                "guildSettings.permissionsMap.roles": {
+                  roleID: target.id,
+                  permissions:[commandPermission.information.permission.perm.toString()]
+                }
+              }
+            }, (err, res) => {if(err) console.log(err); })
+          } else {
+            Guild.updateOne({ $and: [{_id: message.guild.id}, {"guildSettings.permissionsMap.roles.roleID": target.id}]}, {
+              $pull: {
+                "guildSettings.permissionsMap.roles.$.permissions": commandPermission.information.permission.perm.toString()
+              }
+            }, (err, res) => {if(err) console.log(err); })
+          }
+
+        } else if(!res.guildSettings.permissionsMap.roles.find(role => role.roleID === target.id).permissions.includes(commandPermission.information.permission.perm.toString())){
+          return error.invalid(message, "GainedPermission", "Role doesn't have this permission already");
+        }
+        return success.permsRevoked(message, target.name, commandPermission.information.permission.perm.toString());
       })
     }
   }

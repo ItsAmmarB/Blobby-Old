@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const MemberSchema = mongoose.Schema({
+const userSchema = mongoose.Schema({
     _id: String,
     userInfo: {
         userID: String,
@@ -20,13 +20,7 @@ const MemberSchema = mongoose.Schema({
         _id: String,
         startedAt: String,
         EndsAt: String,
-    }],
-    privileges:[{
-        _id: String,
-        rank: String,
-        permission: String,
-        startedAt: String,
-        EndsAt: String,
     }]
 });
-module.exports = mongoose.model("Member", MemberSchema)
+module.exports = mongoose.model("User", userSchema)
+

@@ -1,5 +1,4 @@
 module.exports.run = async (bot, message, args) => {
-    if(!permCheck(message)) return error.noPerms(message, cmdInfo.permission.group + "." + cmdInfo.permission.perm)
     const embedpfp = "https://k7tjga.am.files.1drv.com/y4mdgfeDYGqlt4bwWFlaI8O9OVg6Bl2vLvU2Aimk8S9nQ00EktkYgUObK0rOqEsMJLeI4-foBy5AnojrMdIU9LJgk_FkVvinhIapUGzYWpkBXFm8bGmnfbgxoEQjmy2y6ey8T3UWA33Dl54Tw9lSozwvYQwaJedJow5c1TNFx42UctvjjDmPqetDdD_5WllO6o3o_PlbEzDzFBBzHLrA99SRA?width=300&height=300&cropmode=none"
     const subSection = args[0]
     const prams = args.slice(1).join(" ") || "pc"
@@ -111,7 +110,7 @@ module.exports.run = async (bot, message, args) => {
     },
     permission: {
       perm: "fortnite",
-      group: "Member"
+      group: "User"
     },
     help: {
         name: "Fortnite",
