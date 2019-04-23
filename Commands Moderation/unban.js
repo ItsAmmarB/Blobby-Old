@@ -16,18 +16,18 @@ module.exports.run = async (bot, message, args) => {
 const me = bot.users.get("357842475328733186");
 exports.information = {
   trigger: {
-  name: "unban",
-  aliases: "ub",
+    name: "unban",
+    aliases: "ub",
   },
   permission: {
-  perm: "Unban",
-  group: "Admin"
+    perm: "Unban",
+    group: "Admin"
   },
   help: {
-  name: "Unban",
-  description: "Unbans a member of the server",
-  usage: "<Banned User>",
-  examples: [me.tag, me.id]
+    name: "Unban",
+    description: "Unbans a member of the server",
+    usage: "<Banned User>",
+    examples: [me.tag, me.id]
   }
 }
 

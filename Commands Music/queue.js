@@ -63,17 +63,17 @@ module.exports.run = async (bot, message, args) => {
 
 exports.information = {
     trigger: {
-    name: "queue",
-    aliases: "q",
+        name: "queue",
+        aliases: "q",
     },
     permission: {
-    perm: "queue",
-    group: "Member"
+        perm: "Queue",
+        group: "Member"
     },
     help: {
-    name: "Queue",
-    description: "Show the currect queue and clears it",
-    usage: "(Clear)",
-    examples: [ " ", " Clear"]
+        name: "Queue",
+        description: "Show the currect queue and clears it",
+        usage: "(Clear)",
+        examples: [ " ", " Clear"]
     }
 }

@@ -18,17 +18,17 @@ module.exports.run = async (bot, message, args) => {
 
 exports.information = {
     trigger: {
-    name: "skip",
-    aliases: "skp",
+        name: "skip",
+        aliases: "skp",
     },
     permission: {
-    perm: "Skip",
-    group: "Member"
+        perm: "Skip",
+        group: "Member"
     },
     help: {
-    name: "Skip",
-    description: "Skip current playing audio",
-    usage: " ",
-    examples: [" ", " "]
+        name: "Skip",
+        description: "Skip current playing audio",
+        usage: " ",
+        examples: [" ", " "]
     }
 }

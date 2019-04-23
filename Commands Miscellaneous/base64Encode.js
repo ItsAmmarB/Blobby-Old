@@ -15,13 +15,13 @@ exports.information = {
         aliases: "enc",
     },
     permission: {
-        perm: "base64Encode",
+        perm: "Base64Encode",
         group: "User"
     },
     help: {
         name: "Encode",
         description: "Encodes normal string to Base64 string",
-        usage: "[Normal String]",
+        usage: "<Normal String>",
         examples: ["SGVsbG8gV29ybGQ=", "SGV5LCBJJ20gQmxvYmJ5"]
     }
   }

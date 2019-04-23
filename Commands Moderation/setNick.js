@@ -17,18 +17,18 @@ module.exports.run = async (bot, message, args) => {
 const me = bot.users.get("357842475328733186");
 exports.information = {
   trigger: {
-  name: "setnick",
-  aliases: "snk",
+    name: "setnick",
+    aliases: "snk",
   },
   permission: {
-  perm: "SetNick",
-  group: "Admin"
+    perm: "SetNick",
+    group: "Admin"
   },
   help: {
-  name: "SetNick",
-  description: "Sets someone's name to something else",
-  usage: "<User> <New Name>",
-  examples: [me.tag + " maximus", me.id + " maxxy Waxxy"]
+    name: "SetNick",
+    description: "Sets someone's name to something else",
+    usage: "<User> <New Name>",
+    examples: [me.tag + " maximus", me.id + " maxxy Waxxy"]
   }
 }
 

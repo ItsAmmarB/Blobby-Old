@@ -20,7 +20,7 @@ exports.information = {
         aliases: "tc",
     },
     permission: {
-      perm: "toDex",
+      perm: "ToDex",
       group: "User"
     },
     help: {

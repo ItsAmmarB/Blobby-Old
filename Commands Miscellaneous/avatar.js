@@ -23,7 +23,7 @@ exports.information = {
   help: {
     name: "Avatar",
     description: "Show a users avatar",
-    usage: "[User]",
+    usage: "<User>",
     examples: [me.tag, me.id],
   }
 }

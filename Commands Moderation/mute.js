@@ -294,17 +294,17 @@ exports.run = async (bot, message, args) => {
 const me = bot.users.get("357842475328733186");
 exports.information = {
     trigger: {
-    name: "mute",
-    aliases: "mt",
+        name: "mute",
+        aliases: "mt",
     },
     permission: {
-    perm: "Mute",
-    group: "Admin"
+        perm: "Mute",
+        group: "Admin"
     },
     help: {
-    name: "Mute",
-    description: "Mutes a member in all server channels\n• Note: maximum duration is 3 Weeks.\nDuration shortcuts:\ns = Seconds  m = Minutes  h = Hours\nd = Days  w = Weeks",
-    usage: "<User> <Duration>",
-    examples: [me.tag + " 2d", me.id + " 1h"]
+        name: "Mute",
+        description: "Mutes a member in all server channels\n• Note: maximum duration is 3 Weeks.\n• Duration shortcuts:\ns = Seconds  m = Minutes  h = Hours\nd = Days  w = Weeks",
+        usage: "<User> <Duration>",
+        examples: [me.tag + " 2d", me.id + " 1h"]
     }
 }

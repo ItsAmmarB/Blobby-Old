@@ -15,18 +15,18 @@ module.exports.run = async (bot, message, args) => {
 const me = bot.users.get("357842475328733186");
 exports.information = {
   trigger: {
-  name: "move",
-  aliases: "m",
+    name: "move",
+    aliases: "m",
   },
   permission: {
-  perm: "Move",
-  group: "Admin"
+    perm: "Move",
+    group: "Admin"
   },
   help: {
-  name: "Move",
-  description: "Moves a member to the spicified voice channel",
-  usage: "<User> <Channel Name>",
-  examples: [me.tag + " Development Lounge", me.id + " AFK Channel"]
+    name: "Move",
+    description: "Moves a member to the spicified voice channel",
+    usage: "<User> <Channel Name>",
+    examples: [me.tag + " Development Lounge", me.id + " AFK Channel"]
   }
 }
 

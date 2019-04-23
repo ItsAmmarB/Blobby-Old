@@ -8,18 +8,18 @@ module.exports.run = async (bot, message, args) => {
 
   exports.information = {
     trigger: {
-    name: "say",
-    aliases: "sy",
+        name: "say",
+        aliases: "sy",
     },
     permission: {
-    perm: "Say",
-    group: "Admin"
+        perm: "Say",
+        group: "Admin"
     },
     help: {
-    name: "Say",
-    description: "Makes the bot say something instead of you",
-    usage: "<Message>",
-    examples: ["Hello World", "Welcome to my server!"]
+        name: "Say",
+        description: "Makes the bot say something instead of you",
+        usage: "<Message>",
+        examples: ["Hello World", "Welcome to my server!"]
     }
   }
 

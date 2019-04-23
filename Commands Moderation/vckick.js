@@ -19,18 +19,18 @@ success.vckick(message, mName.user.username, "Kicked")
 const me = bot.users.get("357842475328733186");
 exports.information = {
   trigger: {
-  name: "vckick",
-  aliases: "vk",
+    name: "vckick",
+    aliases: "vk",
   },
   permission: {
-  perm: "VCKick",
-  group: "Admin"
+    perm: "VCKick",
+    group: "Admin"
   },
   help: {
-  name: "VCKick",
-  description: "Kicks a member from a voice channel",
-  usage: "<Usr>",
-  examples: [me.tag, me.id]
+    name: "VCKick",
+    description: "Kicks a member from a voice channel",
+    usage: "<Usr>",
+    examples: [me.tag, me.id]
   }
 }
 

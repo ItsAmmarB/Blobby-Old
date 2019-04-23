@@ -26,7 +26,7 @@ exports.information = {
   help: {
     name: "SetPrefix",
     Description: "Changes the prefix of the guild",
-    usage: "[Desired Prefix]",
+    usage: "<Desired Prefix>",
     examples: ["?", ";"]
   }
 }

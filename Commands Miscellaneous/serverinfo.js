@@ -51,7 +51,7 @@ exports.information = {
     aliases: "si",
   },
   permission: {
-    perm: "serverInfo",
+    perm: "ServerInfo",
     group: "Admin"
   },
   help: {

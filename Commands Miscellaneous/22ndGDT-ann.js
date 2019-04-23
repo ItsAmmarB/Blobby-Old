@@ -22,17 +22,17 @@ module.exports.run = async (bot, message, args) => {
 
 exports.information = {
     trigger: {
-        name: "announce",
+        name: "22gdtannounce",
         aliases: "ann",
     },
     permission: {
-      perm: "22GDTAdmin.announce",
+      perm: "22GDT.Announce",
       group: "22GDT"
     },
     help: {
         name: "Announce",
         description: "sends an update message to #announcement",
-        usage: "[update details]",
+        usage: "<Title>, <Body> ",
         examples: ["Offical Discord, This is the 22nd Gladiators Offical Discord Server.", "Training, Tomorrow will be a training at 6PM EST."]
     }
   }

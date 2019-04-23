@@ -13,7 +13,7 @@ module.exports.run = async (bot, message, args) => {
       aliases: "ping",
     },
     permission: {
-      perm: "ping",
+      perm: "Ping",
       group: "User"
     },
     help: {

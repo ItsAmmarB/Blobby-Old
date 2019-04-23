@@ -101,7 +101,7 @@ exports.information = {
         aliases: "lr",
     },
     permission: {
-        perm: "lyrics",
+        perm: "Lyrics",
         group: "User"
     },
     help: {

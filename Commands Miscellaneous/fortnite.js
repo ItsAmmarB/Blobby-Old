@@ -103,45 +103,65 @@ module.exports.run = async (bot, message, args) => {
 };
 
 
-  exports.information = {
+exports.information = {
     trigger: {
         name: "fortnite",
         aliases: "ftn",
     },
     permission: {
-      perm: "fortnite",
-      group: "User"
+        perm: "Fortnite",
+        group: "User"
     },
     help: {
         name: "Fortnite",
         description: "Shows yours or your friends stats in fornite.",
-        usage: "[Epic Name] (Platform) \n **Note:** if no Platform provided PC will be default.",
+        usage: "<Epic Name> (Platform) \n **Note:** if no Platform provided PC will be default.",
         examples: ["MaxF.", "Link Alfredf"]
     },
-    sections: {
-        Link: {
+    sections: [
+        {
+            permission: {
+                perm: "Fortnite.Link",
+                group: "User"
+            },
             name: "Link",
+            shortcut: "l",
             description: "Links your epic account to your discord user.",
             usage: "<Epic Account>",
             examples: ["MaxF.", "Alfredf"]
         },
-        Unlink: {
+        {
+            permission: {
+                perm: "Fortnite.Unlink",
+                group: "User"
+            },
             name: "Unlink",
+            shortcut: "u",
             description: "Unlinks your epic account from your discord user.",
             usage: "",
             examples: ["", ""]
         },
-        Shop: {
+        {
+            permission: {
+                perm: "Fortnite.Shop",
+                group: "User"
+            },
             name: "Shop",
+            shortcut: "s",
             description: "Show currect Item Shop items with prices or discription, price, rarity and price of spicific item.",
-            usage: "(Item Number)",
-            examples: ["1.", "6"]
+            usage: "<Item Number>",
+            examples: ["1", "6"]
         },
-        WeekChal: {
+        {
+            permission: {
+                perm: "Fortnite.WeeklyChallenges",
+                group: "User"
+            },
             name: "WeeklyChallanges",
-            description: "Show currect week's challanges.",
-            usage: "",
-            examples: ["", ""]
+            shortcut: "wc",
+            description: "Show the weeks's challanges for the current season. /n**Note:** If no week specified current week will be shows",
+            usage: "(Week Number)",
+            examples: ["3", "10"]
         }
-    }
-  }
+    ]
+}

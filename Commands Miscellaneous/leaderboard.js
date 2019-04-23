@@ -27,7 +27,7 @@ exports.information = {
 		aliases: "lb",
 	},
 	permission: {
-	  perm: "leaderboard",
+	  perm: "Leaderboard",
 	  group: "User"
 	},
 	help: {

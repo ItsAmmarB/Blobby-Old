@@ -39,17 +39,17 @@ module.exports.run = async (bot, message, args) => {
 
 exports.information = {
     trigger: {
-    name: "loop",
-    aliases: "lp",
+        name: "loop",
+        aliases: "lp",
     },
     permission: {
-    perm: "loop",
-    group: "Member"
+        perm: "Loop",
+        group: "Member"
     },
     help: {
-    name: "Loop",
-    description: "Repeats the song or the queue endlessly.\n• Note: off = Loop off, Song = Loop current song only, all = Loop all queue songs",
-    usage: "<Switch>",
-    examples: ["off", "all"]
+        name: "Loop",
+        description: "Repeats the song or the queue endlessly.\n• Note: off = Loop off, Song = Loop current song only, all = Loop all queue songs",
+        usage: "<Switch>",
+        examples: ["off", "all"]
     }
 }

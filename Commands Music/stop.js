@@ -16,17 +16,17 @@ module.exports.run = async (bot, message, args) => {
 
 exports.information = {
     trigger: {
-    name: "stop",
-    aliases: "stp",
+        name: "stop",
+        aliases: "stp",
     },
     permission: {
-    perm: "skip",
-    group: "Member"
+        perm: "Stop",
+        group: "Member"
     },
     help: {
-    name: "Stop",
-    description: "Stops the playing audio, clears the queue and leaves channel",
-    usage: " ",
-    examples: [" ", " "]
+        name: "Stop",
+        description: "Stops the playing audio, clears the queue and leaves channel",
+        usage: " ",
+        examples: [" ", " "]
     }
 }

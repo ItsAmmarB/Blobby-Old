@@ -33,7 +33,7 @@ exports.information = {
     aliases: "s",
   },
   permission: {
-    perm: "status",
+    perm: "Status",
     group: "User"
   },
   help: {

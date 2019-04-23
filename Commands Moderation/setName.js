@@ -9,18 +9,18 @@ module.exports.run = async (bot, message, args) => {
 
 exports.information = {
   trigger: {
-  name: "setname",
-  aliases: "sn",
+    name: "setname",
+    aliases: "sn",
   },
   permission: {
-  perm: "SetName",
-  group: "Owner"
+    perm: "SetName",
+    group: "Owner"
   },
   help: {
-  name: "SetName",
-  description: "Sets Bot's name to your desired name",
-  usage: "<New Name>",
-  examples: ["Blobbbbbbby", "Admin Bot"]
+    name: "SetName",
+    description: "Sets Bot's name to your desired name",
+    usage: "<New Name>",
+    examples: ["Blobbbbbbby", "Admin Bot"]
   }
 }
 

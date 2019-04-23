@@ -15,13 +15,13 @@ exports.information = {
         aliases: "dec",
     },
     permission: {
-        perm: "base64Decode",
+        perm: "Base64Decode",
         group: "User"
     },
     help: {
         name: "Decode",
         description: "Decodes Base64 string to normal string",
-        usage: "[Base64 String]",
+        usage: "<Base64 String>",
         examples: ["Hello World", "Hey, I'm Blobby"]
     }
   }

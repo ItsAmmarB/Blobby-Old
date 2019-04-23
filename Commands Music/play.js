@@ -79,18 +79,18 @@ module.exports.run = async (bot, message, args) => {
 
   exports.information = {
       trigger: {
-      name: "play",
-      aliases: "p",
+        name: "play",
+        aliases: "p",
       },
       permission: {
-      perm: "Play",
-      group: "Member"
+        perm: "Play",
+        group: "Member"
       },
       help: {
-      name: "Play",
-      description: "Plays an audio off of YourTube (Playlists supported)",
-      usage: "<Key Word or URL>",
-      examples: ["MAX - Light Down Low", "https://www.youtube.com/watch?v=5-xVwxqjNyI"]
+        name: "Play",
+        description: "Plays an audio off of YourTube (Playlists supported)",
+        usage: "<Key Word or URL>",
+        examples: ["MAX - Light Down Low", "https://www.youtube.com/watch?v=5-xVwxqjNyI"]
       }
   }
   

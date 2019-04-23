@@ -98,17 +98,17 @@ const me = bot.users.get("357842475328733186");
 
 exports.information = {
   trigger: {
-  name: "kick",
-  aliases: "k",
+    name: "kick",
+    aliases: "k",
   },
   permission: {
-  perm: "Kick",
-  group: "Admin"
+    perm: "Kick",
+    group: "Admin"
   },
   help: {
-  name: "kick",
-  description: "Kicks a member of the server",
-  usage: "<User> (Reason)",
-  examples: [me.tag, me.id + " You can't be here"]
+    name: "kick",
+    description: "Kicks a member of the server",
+    usage: "<User> (Reason)",
+    examples: [me.tag, me.id + " You can't be here"]
   }
 }

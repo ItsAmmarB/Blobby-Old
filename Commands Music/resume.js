@@ -9,17 +9,17 @@ success.mStop(message, "Resumed")
 
   exports.information = {
       trigger: {
-      name: "resume",
-      aliases: "r",
+        name: "resume",
+        aliases: "r",
       },
       permission: {
-      perm: "resume",
-      group: "Member"
+        perm: "Resume",
+        group: "Member"
       },
       help: {
-      name: "Resume",
-      description: "Resumes the audio play",
-      usage: " ",
-      examples: [" ", " "]
+        name: "Resume",
+        description: "Resumes the audio play",
+        usage: " ",
+        examples: [" ", " "]
       }
   }

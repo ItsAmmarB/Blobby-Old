@@ -14,17 +14,17 @@ module.exports.run = async (bot, message, args) => {
 
   exports.information = {
       trigger: {
-      name: "volume",
-      aliases: "v",
+        name: "volume",
+        aliases: "v",
       },
       permission: {
-      perm: "volume",
-      group: "Member"
+        perm: "Volume",
+        group: "Member"
       },
       help: {
-      name: "Volume",
-      description: "Adjests the volume of the playing audio.\n• Note: 3 is the default amount.",
-      usage: "<1-10>",
-      examples: ["1", "5"]
+        name: "Volume",
+        description: "Adjests the volume of the playing audio.\n• Note: 3 is the default amount.",
+        usage: "<1-10>",
+        examples: ["1", "5"]
       }
   }

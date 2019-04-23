@@ -50,7 +50,7 @@ exports.information = {
 		aliases: "stm",
 	},
 	permission: {
-	  perm: "steam",
+	  perm: "Steam",
 	  group: "User"
 	},
 	help: {
