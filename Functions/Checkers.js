@@ -1,5 +1,4 @@
-module.exports.permCheck = (message, callback) => {
-  let reqPerm = cmdInfo.permission.perm;
+module.exports.permCheck = (message, reqPerm, callback) => {
 if(message.member.hasPermission(["ADMINISTRATOR"])) return callback(true);
 Guild.findOne({_id: message.guild.id, "guildSettings.permissionsMap.users.userID": message.author.id})
   .then(res => {
@@ -24,7 +23,7 @@ Guild.findOne({_id: message.guild.id, "guildSettings.permissionsMap.users.userID
     } else {
     Guild.findOne({_id: message.guild.id})
       .then(res => {
-        if(res.guildSettings.permissionsMap.roles.find(role => role.roleID === message.member.roles.find(role2 => role2.id === role.roleID).id) === undefined || !res.guildSettings.permissionsMap.roles.find(role => role.roleID === message.member.roles.find(role2 => role2.id === role.roleID).id)) {
+        if(!res.guildSettings.permissionsMap.roles.find(role => message.member.roles.get(role.roleID))) {
           return callback(false)
         } else {
           if(res.guildSettings.permissionsMap.roles.find(role => role.roleID === message.member.roles.find(role2 => role2.id === role.roleID).id).permissions.includes(reqPerm)) {
@@ -37,6 +36,8 @@ Guild.findOne({_id: message.guild.id, "guildSettings.permissionsMap.users.userID
     }
   })
 }
+
+
 
 module.exports.permCheckDev = (message, callback) => {
   Privilege.findOne({_id: message.author.id})

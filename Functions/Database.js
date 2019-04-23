@@ -19,7 +19,9 @@ module.exports.newGuild = async (guild) => {
               users: [],
               roles: [{
                 roleID: guild.id,
-                permissions:[]
+                permissions:[
+                  
+                ]
               }]
           }
       }
