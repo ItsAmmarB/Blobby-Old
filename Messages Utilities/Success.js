@@ -21,6 +21,24 @@ module.exports.permsRevoked = (message, target, permission) => {
 message.channel.send(embed)
 }
 
+module.exports.permsCleared = (message, target, permission) => {
+	let embed = new Discord.RichEmbed()
+        .setDescription(`All ${target}'s permissions have been Revoked! `)
+        .setColor(sColor)
+
+
+message.channel.send(embed)
+}
+
+module.exports.permsAll = (message, target, permission) => {
+	let embed = new Discord.RichEmbed()
+        .setDescription(`${target} has Gained All permissions!`)
+        .setColor(sColor)
+
+
+message.channel.send(embed)
+}
+
 //===================================================Channel Actions
 
 module.exports.vckick = (message, mName, cmd, reason) => {

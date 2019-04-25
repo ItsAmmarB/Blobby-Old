@@ -28,10 +28,10 @@ module.exports.handle = async (message) => {
     let reqPerm = cmdInfo.permission.perm;
     permCheck(message, reqPerm, async (callback) => {
       if(!callback || callback === false) return error.noPerms(message, cmdInfo.permission.group+ "."+reqPerm.toString())
-      if(message.content.split(" ").length > 1 && cmdInfo.sections.find(sec => sec.name === message.content.split(" ")[1].split("")[0].toUpperCase()+message.content.split(" ")[1].split("").slice(1).join("").toLowerCase())) {
+      if(message.content.split(" ").length > 1 && cmdInfo["section"] && cmdInfo.sections.find(sec => sec.name === message.content.split(" ")[1].split("")[0].toUpperCase()+message.content.split(" ")[1].split("").slice(1).join("").toLowerCase())) {
         subReqPerm = cmdInfo.sections.find(sec => sec.name === message.content.split(" ")[1].split("")[0].toUpperCase()+message.content.split(" ")[1].split("").slice(1).join("").toLowerCase()).permission.perm;
         subcmd = cmdInfo.sections.find(sec => sec.shortcut === message.content.split(" ")[1].toLowerCase());
-      } else if(message.content.split(" ").length > 1 && cmdInfo.sections.find(sec => sec.shortcut === message.content.split(" ")[1].toLowerCase())) {
+      } else if(message.content.split(" ").length > 1 && cmdInfo["section"] && cmdInfo.sections.find(sec => sec.shortcut === message.content.split(" ")[1].toLowerCase())) {
         subReqPerm = cmdInfo.sections.find(sec => sec.shortcut === message.content.split(" ")[1].toLowerCase()).permission.perm;
         subcmd = cmdInfo.sections.find(sec => sec.shortcut === message.content.split(" ")[1].toLowerCase());
       } else {
