@@ -17,16 +17,12 @@ global.atob = require('atob');
 global.btoa = require('btoa');
 global.Promise = require('bluebird');
 global.nau = require('nau')
-global.Canvas = require('canvas');
 global.snekfetch = require('snekfetch');
 global.mongoose = require('mongoose');
 
 
 //Mongoose Database Connection Establisher
-let url = "mongodb://localhost:27017/Blobby";
-mongoose.connect(url, { useNewUrlParser: true });
-
-global.guilds = {};
+mongoose.connect("mongodb://localhost:27017/Blobby", { useNewUrlParser: true });
 
 
 //Utilties
@@ -58,19 +54,6 @@ bot.testAliases = new Discord.Collection();
 bot.devCommands = new Discord.Collection();
 bot.devAliases = new Discord.Collection();
 
-
-//Process Error Handler
-process.on('unhandledRejection', err => {if(err) console.log(err)});
-
-
-//Bot Error Handler
-bot.on("error", err => {if(err) console.log(err)});
-
-
-//Music Object
-global.guilds = {};
-
-
 //Function Import
 
 //Database Functions
@@ -83,7 +66,8 @@ global.delPrivilege = require("./Functions/Database.js").delPrivilege;
 global.newFiveM = require("./Functions/Database.js").newFiveM;
 global.delFiveM = require("./Functions/Database.js").delFiveM;
 
-
+//Other Functions
+global.ErrorHandler = require("./Functions/ErrorHandler.js");
 global.modifierCheck = require("./Functions/Checkers.js").modifierCheck;
 global.permCheck = require("./Functions/Checkers.js").permCheck;
 global.permCheckDev = require("./Functions/Checkers.js").permCheckDev;
@@ -96,6 +80,16 @@ global.getID = require("./Functions/YouTube.js").getID;
 global.search_video = require("./Functions/YouTube.js").search_video;
 global.isYoutube = require("./Functions/YouTube.js").isYoutube;
 
+//Error Handler
+ErrorHandler.processErrorA();
+ErrorHandler.processErrorB();
+ErrorHandler.processException();
+ErrorHandler.processWarning();
+ErrorHandler.botError();
+ErrorHandler.botWarning();
+
+//Music Object
+global.guilds = {};
 
 
 //Commands Loader 
@@ -106,6 +100,9 @@ bot.on("ready", async () => {
   CommandLoader.Music("./Commands Music");
   CommandLoader.Development("./Commands Development");
   CommandLoader.Testing("./Commands Testing");
+  bot.user.setPresence({ game: { name: 'blobbybot.com | Max F.' }, status: 'idle' })
+  bot.user.setStatus('idle')
+
 });
 
 

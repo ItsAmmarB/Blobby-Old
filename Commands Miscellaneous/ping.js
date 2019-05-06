@@ -14,7 +14,7 @@ module.exports.run = async (bot, message, args) => {
     },
     permission: {
       perm: "Ping",
-      group: "User"
+      group: "Member"
     },
     help: {
       name: "Ping",

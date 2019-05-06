@@ -1,7 +1,7 @@
 module.exports.run = async (bot, message, args) => {
     const embedpfp = "https://k7tjga.am.files.1drv.com/y4mdgfeDYGqlt4bwWFlaI8O9OVg6Bl2vLvU2Aimk8S9nQ00EktkYgUObK0rOqEsMJLeI4-foBy5AnojrMdIU9LJgk_FkVvinhIapUGzYWpkBXFm8bGmnfbgxoEQjmy2y6ey8T3UWA33Dl54Tw9lSozwvYQwaJedJow5c1TNFx42UctvjjDmPqetDdD_5WllO6o3o_PlbEzDzFBBzHLrA99SRA?width=300&height=300&cropmode=none"
     const subSection = args[0]
-    const prams = args.slice(1).join(" ") || "pc"
+    const prams = args.slice(1).join(" ") || "pc";
 
 
 
@@ -110,7 +110,7 @@ exports.information = {
     },
     permission: {
         perm: "Fortnite",
-        group: "User"
+        group: "Member"
     },
     help: {
         name: "Fortnite",
@@ -122,7 +122,7 @@ exports.information = {
         {
             permission: {
                 perm: "Fortnite.Link",
-                group: "User"
+                group: "Member"
             },
             name: "Link",
             shortcut: "l",
@@ -133,7 +133,7 @@ exports.information = {
         {
             permission: {
                 perm: "Fortnite.Unlink",
-                group: "User"
+                group: "Member"
             },
             name: "Unlink",
             shortcut: "u",
@@ -144,7 +144,7 @@ exports.information = {
         {
             permission: {
                 perm: "Fortnite.Shop",
-                group: "User"
+                group: "Member"
             },
             name: "Shop",
             shortcut: "s",
@@ -155,7 +155,7 @@ exports.information = {
         {
             permission: {
                 perm: "Fortnite.WeeklyChallenges",
-                group: "User"
+                group: "Member"
             },
             name: "WeeklyChallanges",
             shortcut: "wc",

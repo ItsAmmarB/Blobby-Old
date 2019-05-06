@@ -34,7 +34,7 @@ exports.information = {
   },
   permission: {
     perm: "Status",
-    group: "User"
+    group: "Member"
   },
   help: {
     name: "Status",

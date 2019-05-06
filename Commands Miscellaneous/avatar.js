@@ -18,7 +18,7 @@ exports.information = {
   },
   permission: {
     perm: "avatar",
-    group: "User"
+    group: "Member"
   },
   help: {
     name: "Avatar",

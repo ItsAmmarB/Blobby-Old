@@ -28,7 +28,7 @@ exports.information = {
 	},
 	permission: {
 	  perm: "Leaderboard",
-	  group: "User"
+	  group: "Member"
 	},
 	help: {
 		name: "Leaderboard",

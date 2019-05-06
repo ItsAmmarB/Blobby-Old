@@ -16,7 +16,7 @@ exports.information = {
     },
     permission: {
         perm: "Base64Encode",
-        group: "User"
+        group: "Member"
     },
     help: {
         name: "Encode",

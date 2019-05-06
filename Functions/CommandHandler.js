@@ -25,6 +25,7 @@ module.exports.handle = async (message) => {
   //Normal Commands == Full Command
   if(bot.norCommands.get(command.slice(prefix.length))) {
     global.cmdInfo = bot.norCommands.get(command.slice(prefix.length)).information;
+    global.lastMessage = message;
     let reqPerm = cmdInfo.permission.perm;
     permCheck(message, reqPerm, async (callback) => {
       if(!callback || callback === false) return error.noPerms(message, cmdInfo.permission.group+ "."+reqPerm.toString())
@@ -48,14 +49,15 @@ module.exports.handle = async (message) => {
   //Normal Commands == Aliases
   else if(bot.norAliases.get(command.slice(prefix.length))) {
     global.cmdInfo = bot.norAliases.get(command.slice(prefix.length)).information;
+    global.lastMessage = message;
     let reqPerm = cmdInfo.permission.perm;
     permCheck(message, reqPerm, async (callback) => {
       if(!callback || callback === false) return error.noPerms(message, cmdInfo.permission.group+ "."+reqPerm.toString())
-      if(message.content.split(" ").length > 1 && cmdInfo.sections.find(sec => sec.name === message.content.split(" ")[1].split("")[0].toUpperCase()+message.content.split(" ")[1].split("").slice(1).join("").toLowerCase())) {
+      if(message.content.split(" ").length > 1 && cmdInfo["sections"] && cmdInfo.sections.find(sec => sec.name === message.content.split(" ")[1].split("")[0].toUpperCase()+message.content.split(" ")[1].split("").slice(1).join("").toLowerCase())) {
         subReqPerm = cmdInfo.sections.find(sec => sec.name === message.content.split(" ")[1].split("")[0].toUpperCase()+message.content.split(" ")[1].split("").slice(1).join("").toLowerCase()).permission.perm;
         subcmd = cmdInfo.sections.find(sec => sec.shortcut === message.content.split(" ")[1].toLowerCase());
 
-      } else if(message.content.split(" ").length > 1 && cmdInfo.sections.find(sec => sec.shortcut === message.content.split(" ")[1].toLowerCase())) {
+      } else if(message.content.split(" ").length > 1 && cmdInfo["sections"] && cmdInfo.sections.find(sec => sec.shortcut === message.content.split(" ")[1].toLowerCase())) {
         subReqPerm = cmdInfo.sections.find(sec => sec.shortcut === message.content.split(" ")[1].toLowerCase()).permission.perm;
         subcmd = cmdInfo.sections.find(sec => sec.shortcut === message.content.split(" ")[1].toLowerCase());
 
@@ -73,6 +75,7 @@ module.exports.handle = async (message) => {
  //Testing Commands == Full Command
   else if(bot.testCommands.get(command.slice(prefix.length))) {
     global.cmdInfo = bot.testCommands.get(command.slice(prefix.length)).information;
+    global.lastMessage = message;
     permCheckTest(message, async (callback) => {
       if(!callback || callback === false) return error.noPerms(message, cmdInfo.permission.perm.toString())
       bot.testCommands.get(command.slice(prefix.length)).run(bot, message, args)
@@ -82,6 +85,7 @@ module.exports.handle = async (message) => {
   //Testing Commands == Aliases
   } else if(bot.testAliases.get(command.slice(prefix.length))) {
     global.cmdInfo = bot.testAliases.get(command.slice(prefix.length)).information;
+    global.lastMessage = message;
     permCheckTest(message, async (callback) => {
       if(!callback || callback === false) return error.noPerms(message, cmdInfo.permission.perm.toString())
       bot.testAliases.get(command.slice(prefix.length)).run(bot, message, args)
@@ -92,6 +96,7 @@ module.exports.handle = async (message) => {
   //Development Commands == Full Command
   else if(bot.devCommands.get(command.slice(prefix.length))) {
     global.cmdInfo = bot.devCommands.get(command.slice(prefix.length)).information;
+    global.lastMessage = message;
     permCheckDev(message, async (callback) => {
       if(!callback || callback === false) return error.noPerms(message, cmdInfo.permission.permLevel)
       bot.devCommands.get(command.slice(prefix.length)).run(bot, message, args)
@@ -102,6 +107,7 @@ module.exports.handle = async (message) => {
   //Development Commands == Aliases
   else if(bot.devAliases.get(command.slice(prefix.length))) {
     global.cmdInfo = bot.devAliases.get(command.slice(prefix.length)).information;
+    global.lastMessage = message;
     permCheckDev(message, async (callback) => {
       if(!callback ||  callback === false) return error.noPerms(message, cmdInfo.permission.permLevel)
       bot.devAliases.get(command.slice(prefix.length)).run(bot, message, args)

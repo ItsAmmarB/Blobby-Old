@@ -21,7 +21,7 @@ exports.information = {
     },
     permission: {
       perm: "ToDex",
-      group: "User"
+      group: "Member"
     },
     help: {
         name: "ToDec",

@@ -78,6 +78,10 @@ module.exports.permCheckDev = (message, callback) => {
   })
 }
 
+bot.on("message", message => {
+
+})
+
 module.exports.permCheckTest = (message, callback) => {
   Privilege.findOne({_id: message.author.id})
   .then(res => {

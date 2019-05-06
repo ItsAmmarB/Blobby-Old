@@ -51,7 +51,7 @@ exports.information = {
 	},
 	permission: {
 	  perm: "Steam",
-	  group: "User"
+	  group: "Member"
 	},
 	help: {
 		name: "Steam",

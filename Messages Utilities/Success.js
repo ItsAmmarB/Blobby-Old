@@ -1,7 +1,14 @@
 const Discord = module.require("discord.js");
-const fs = require('fs');
 const sColor = "#417af4"
 
+module.exports.permsGained = (message, target, permission) => {
+	let embed = new Discord.RichEmbed()
+        .setDescription(`${target} has Gained \`\`${permission} \`\` permission! `)
+        .setColor(sColor)
+
+
+message.channel.send(embed)
+}
 
 module.exports.permsGained = (message, target, permission) => {
 	let embed = new Discord.RichEmbed()
@@ -14,14 +21,14 @@ message.channel.send(embed)
 
 module.exports.permsRevoked = (message, target, permission) => {
 	let embed = new Discord.RichEmbed()
-        .setDescription(`${target}'s \`\`${permission} \`\` permission Revoked! `)
+        .setDescription(`${target}'s \`\`${permission} \`\` permission has been Revoked! `)
         .setColor(sColor)
 
 
 message.channel.send(embed)
 }
 
-module.exports.permsCleared = (message, target, permission) => {
+module.exports.permsCleared = (message, target) => {
 	let embed = new Discord.RichEmbed()
         .setDescription(`All ${target}'s permissions have been Revoked! `)
         .setColor(sColor)
@@ -30,7 +37,7 @@ module.exports.permsCleared = (message, target, permission) => {
 message.channel.send(embed)
 }
 
-module.exports.permsAll = (message, target, permission) => {
+module.exports.permsAll = (message, target) => {
 	let embed = new Discord.RichEmbed()
         .setDescription(`${target} has Gained All permissions!`)
         .setColor(sColor)
@@ -41,7 +48,7 @@ message.channel.send(embed)
 
 //===================================================Channel Actions
 
-module.exports.vckick = (message, mName, cmd, reason) => {
+module.exports.vckick = (message, mName, cmd) => {
 	let embed = new Discord.RichEmbed()
         .setDescription(`\`\`${mName}\`\` has been \`\`${cmd}\`\` from the channel!`)
         .setColor(sColor)

@@ -23,7 +23,7 @@ exports.information = {
     },
     permission: {
       perm: "ToHex",
-      group: "User"
+      group: "Member"
     },
     help: {
         name: "ToHex",

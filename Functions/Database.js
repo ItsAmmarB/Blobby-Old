@@ -1,6 +1,8 @@
 module.exports.newGuild = async (guild) => {
   let position =  JSON.stringify(Object.values(bot.guilds.map(guild => ({id: guild.id, joinedAt: guild.joinedTimestamp}))).sort((first, second) => (first.joinedAt < second.joinedAt) ? -1 : (first.joinedAt > second.joinedAt) ? 1 : 0 )).split(guild.id).slice(0, 1).join("").split("\"id\"").length - 1
-    const newGuild = new Guild({
+  let globalPermissions = bot.norCommands.filter(command => command.information.permission.group === "Member").map(command => command.information.permission.perm)
+  globalPermissions.push("FiveM.Player", "FiveM.Status", "Fortnite.Link", "Fortnite.Unlink")  
+  const newGuild = new Guild({
       _id: guild.id,
       guildInfo: {
           guildID: guild.id,
@@ -19,9 +21,7 @@ module.exports.newGuild = async (guild) => {
               users: [],
               roles: [{
                 roleID: guild.id,
-                permissions:[
-                  
-                ]
+                permissions:globalPermissions
               }]
           }
       }
