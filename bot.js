@@ -91,7 +91,7 @@ ErrorHandler.botWarning();
 //Music Object
 global.guilds = {};
 
-
+ 
 //Commands Loader 
 bot.on("ready", async () => {
   await CommandLoader.Setup("./Commands Setup");
