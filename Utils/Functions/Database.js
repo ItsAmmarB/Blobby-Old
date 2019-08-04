@@ -1,8 +1,9 @@
 module.exports.newGuild = async (guild) => {
-  let position =  JSON.stringify(Object.values(bot.guilds.map(guild => ({id: guild.id, joinedAt: guild.joinedTimestamp}))).sort((first, second) => (first.joinedAt < second.joinedAt) ? -1 : (first.joinedAt > second.joinedAt) ? 1 : 0 )).split(guild.id).slice(0, 1).join("").split("\"id\"").length - 1
-  let globalPermissions = bot.allCommands.filter(command => command.information.permission.group === "Member").map(command => command.information.permission.perm)
-  globalPermissions.push("FiveM.Player", "FiveM.Status", "Fortnite.Link", "Fortnite.Unlink")  
-  const newGuild = new Guild({
+  let position =  await JSON.stringify(Object.values(bot.guilds.map(guild => ({id: guild.id, joinedAt: guild.joinedTimestamp}))).sort((first, second) => (first.joinedAt < second.joinedAt) ? -1 : (first.joinedAt > second.joinedAt) ? 1 : 0 )).split(guild.id).slice(0, 1).join("").split("\"id\"").length - 1
+  let globalPermissions = [];
+  await bot.allCommands.map(command => command.information.permission.perm).forEach(perm => globalPermissions.push(perm))
+  await bot.allCommands.filter(command => command.information["sections"]).forEach(command => command.information.sections.filter(section => !section.permission["auth"]).forEach(section => globalPermissions.push(section.permission.perm)))
+  const newGuild = await new Guild({
       _id: guild.id,
       guildInfo: {
           guildID: guild.id,
@@ -26,10 +27,9 @@ module.exports.newGuild = async (guild) => {
           }
       }
     },{ strict: false })
-    newGuild.save()
-    guild.members.forEach(member => {
+   await  newGuild.save()
+   await  guild.members.forEach(member => {
       User.findOne({_id: member.id, "userInfo.userID": member.id}, (err, user) =>{
-        if(err) throw err
         if(!user){
           newUser(member)
         } else {

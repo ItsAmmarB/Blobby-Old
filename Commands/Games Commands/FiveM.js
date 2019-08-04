@@ -60,8 +60,9 @@ module.exports.run = async (bot, message, args) => {
                             }
                             var embed = new Discord.RichEmbed()
                             .setColor(color)
-                            .setDescription("FiveM Server Players (IP: "+ arg+")")
-                            .addField(`**⇢  ${e}** out of **${start2.vars.sv_maxClients}** Players.`, `\n` + players)
+                            .setAuthor("FiveM Server Players (IP: "+ arg+")")
+                            .setTitle(`**⇢  ${e}** out of **${start2.vars.sv_maxClients}** Players.`)
+                            .setDescription(playuers)
                             .addField("**⇢** Join Server", "<fivem://connect/" + arg + "/>")
                             .setThumbnail("http://thatziv.ddns.net/assets/fivem.png")
                             message.channel.send({embed: embed});
@@ -96,6 +97,7 @@ exports.information = {
         {
             permission: {
                 perm: "FiveM.Add",
+                auth: "Admin",
                 group: "Games"
             },
             name: "Add",
@@ -107,6 +109,7 @@ exports.information = {
         {
             permission: {
                 perm: "FiveM.Delete",
+                auth: "Admin",
                 group: "Games"
             },
            name: "Delete",
@@ -123,17 +126,6 @@ exports.information = {
            name: "Players",
             shortcut: "p",
             description: "Shows the player in the specified server ranked by their ID.",
-            usage: "<Server Name // IP:Port>",
-            examples: ["Main Server", "172.0.0.1:30330"]
-        },
-        {
-            permission: {
-                perm: "FiveM.Status",
-                group: "Games"
-            },
-           name: "Status",
-            shortcut: "s",
-            description: "Shows the status of the specified server.",
             usage: "<Server Name // IP:Port>",
             examples: ["Main Server", "172.0.0.1:30330"]
         }

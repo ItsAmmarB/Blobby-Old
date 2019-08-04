@@ -1,8 +1,10 @@
-module.exports.run = async (bot, message, args) => {
+module.exports.run = async (bot, message, args) =>{
     const avatar = "https://xaqkww.am.files.1drv.com/y4mp6ACqMRPOSdfBsnFGz0O0JOsfl0zOS6CQdAAqEBr_UxFB_WFTYZdgpl2itKP5VRcTfs-v2z_l0g_5lVniYhVq_kWMHIqFqDlP_UmiwOLuTSQNa6mhtzSDB-aCZW1vpSBDjh2Gg51WiNhbZwyIH95C4HqhPU92X_R9AQaA660Fx7jedyqroqi0Xdhr3yt6z4rrlRFPrnmSlMXElGGjzOTSA?width=400&height=400&cropmode=none"
 	const url = args[0] ? args[0].replace(/<(.+)>/g, '$1') : '';
     if(!args[0] && !args[1] && !args[2] && !args[3]) return help.helpMessage(message, "Play", "Plays the audio of a specified video", "[Song name \\ YouTube URL]", "MAX - Light Down Low", "https://www.youtube.com/watch?v=5-xVwxqjNyI")
     if(!message.member.voiceChannel) return error.invalid(message, "Play", "You must be in a voice channel first")
+    if(!message.guild.members.get(bot.user.id).hasPermission(["CONNECT"])) return error.invalid(message, "Play", "I do not have the \'CONNECT\' permission to join the channel")
+    if(!message.guild.members.get(bot.user.id).hasPermission(["SPEAK"])) return error.invalid(message, "Play", "I do not have the \'SPEAK\' permission to stream in the channel")
     if (message.member.voiceChannel || guilds[message.guild.id].voiceChannel != null) {
         if (guilds[message.guild.id].queue.length > 0 || guilds[message.guild.id].isPlaying === true) {
             if (url.match(/^https?:\/\/(www.youtube.com|youtube.com)\/playlist(.*)$/)) {
@@ -74,6 +76,7 @@ module.exports.run = async (bot, message, args) => {
     } else {
         return error.invalid(message, "Play", "You must be in a voice channel first")
     }
+    
 
 }
 

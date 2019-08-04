@@ -25,7 +25,6 @@ module.exports.run = async function run(bot, message, args) {
       if(mName.hasPermission("ADMINISTRATOR")) return error.unable(message, "Ban", mName.displayName, "User has admin perms")
       if(!mName.bannable) return error.unable(message, "Ban", mName.user.username, "Unable to ban this user")
       let reason = args.slice(1).join(" ")
-      console.log(reason)
       if(!reason) reason = "No reason provided";
       if(reason !== "No reason provided") {
         let embed = new Discord.RichEmbed()
@@ -35,7 +34,7 @@ module.exports.run = async function run(bot, message, args) {
       try{ 
         await mName.send(embed)
       } catch(err) {
-        console.log(`[Error] Couldn\'t message ${mName.user.tag} of his ban in ${message.guild.name}!`)
+        return;
       };
       User.updateOne(
         {_id: mName.id, "guilds._id": message.guild.id},
@@ -49,7 +48,7 @@ module.exports.run = async function run(bot, message, args) {
               reason: reason,
               channelID: message.channel.id
             },
-              moderator: message.member.id
+            moderator: message.member.id
             }
           } 
         },
@@ -66,7 +65,7 @@ module.exports.run = async function run(bot, message, args) {
       try{ 
         await mName.send(embed)
       } catch(err) {
-        console.log(`[Error] Couldn\'t message ${mName.user.tag} of his ban in ${message.guild.name}!`)
+        return;
       };
       success.userBannedWithoutRecord(message, mName.displayName, reason)
       mName.ban(reason);
@@ -98,7 +97,6 @@ module.exports.run = async function run(bot, message, args) {
       if(callback === "norecord"){
         let reason = args.slice(1).join(" ").split("--")[0]
         if(!reason) reason = "No reason provided!"
-        console.log(reason)
         let embed = new Discord.RichEmbed()
         .setDescription(`You have been Banned from \`\`${message.guild.name}\`\` by \`\`${message.member.displayName}\`\` For \`\`${reason}\`\``)
         .setFooter(`Banned At ${moment.utc(Date.now()).format("ddd, MMM Do YYYY, HH:mm:ss")}`)
@@ -106,7 +104,7 @@ module.exports.run = async function run(bot, message, args) {
       try{ 
         await mName.send(embed)
       } catch(err) {
-        console.log(`[Error] Couldn\'t message ${mName.user.tag} of his ban in ${message.guild.name}!`)
+        return;
       };
 
       success.userBannedWithoutRecord(message, mName.displayName, reason)

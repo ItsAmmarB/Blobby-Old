@@ -1,7 +1,6 @@
 const Discord = module.require("discord.js");
 const eColor = "#d63431"
 
-
 module.exports.noPerms = (message, perm) => {
 	let embed = new Discord.RichEmbed()
 		.setDescription(`Insufficient Permission!`)
@@ -30,7 +29,7 @@ message.channel.send(embed).then(m => m.delete(30000))
 
 module.exports.missing = (message, cmd) => {
     let embed = new Discord.RichEmbed()
-        .setDescription(`\`\`${cmd}\`\` argument missing!`)
+        .setDescription(`\`\`${cmd}\`\` argument is missing!`)
         .setColor(eColor)
 message.channel.send(embed).then(m => m.delete(30000))
 }
@@ -63,7 +62,6 @@ module.exports.loggingChannel = (message, args, loop) => {
     let embed = new Discord.RichEmbed()
     .setDescription("Logging channel has already been set to this channel!")
     .setColor(sColor)
-
 
 message.channel.send(embed)
 }

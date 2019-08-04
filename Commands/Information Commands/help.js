@@ -9,10 +9,13 @@ module.exports.run = async (bot, message, args) => {
             .addField("SETTINGS", bot.settingsCommands.map(command => `\`\` ${prefix}${command.information.trigger.name}\`\``), true)
             .addField("MISCELLANEOUS", bot.miscellaneousCommands.filter(command => `\`\` ${prefix}${command.information.trigger.name}\`\`` !== "Help").map(command => `\`\` ${prefix}${command.information.trigger.name}\`\``), true)
             .addField("UTILITY", bot.utilityCommands.map(command => `\`\` ${prefix}${command.information.trigger.name}\`\``), true)
-            .addField("GAMES", bot.utilityCommands.map(command => `\`\` ${prefix}${command.information.trigger.name}\`\``), true)
-            .addField("INFORMATION", bot.utilityCommands.map(command => `\`\` ${prefix}${command.information.trigger.name}\`\``), true)
-
-
+            .addField("GAMES", bot.gamesCommands.map(command => `\`\` ${prefix}${command.information.trigger.name}\`\``), true)
+            .addField("INFORMATION", bot.informationCommands.map(command => `\`\` ${prefix}${command.information.trigger.name}\`\``), true)
+            .setColor("#417af4")
+        message.channel.send(new Discord.RichEmbed()
+        .setDescription("Check your Direct Messages, Help message has been delivered!")
+        .setColor("#417af4")
+        )
        return message.author.send(embed)
     }    
     else if(bot.allCommands.get(cName)) {

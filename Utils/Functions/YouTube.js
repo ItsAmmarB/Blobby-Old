@@ -6,11 +6,11 @@ module.exports.playMusic = function playMusic(id, message) {
   guilds[message.guild.id].voiceChannel = message.member.voiceChannel;
   guilds[message.guild.id].voiceChannel.join().then(function(connection) {
     stream = ytdl("https://www.youtube.com/watch?v=" + id, {
-        filter: 'audioonly'
+        filter: 'audioonly',
+        quality: 'highestaudio'
     });
     guilds[message.guild.id].skispReq = 0;
     guilds[message.guild.id].skippers = [];
-    let avatar = "https://xaqkww.am.files.1drv.com/y4mp6ACqMRPOSdfBsnFGz0O0JOsfl0zOS6CQdAAqEBr_UxFB_WFTYZdgpl2itKP5VRcTfs-v2z_l0g_5lVniYhVq_kWMHIqFqDlP_UmiwOLuTSQNa6mhtzSDB-aCZW1vpSBDjh2Gg51WiNhbZwyIH95C4HqhPU92X_R9AQaA660Fx7jedyqroqi0Xdhr3yt6z4rrlRFPrnmSlMXElGGjzOTSA?width=400&height=400&cropmode=none"
     guilds[message.guild.id].dispatcher = connection.playStream(stream);
     message.guild.voiceConnection.dispatcher.setVolumeLogarithmic(guilds[message.guild.id].volume / 9)
     guilds[message.guild.id].dispatcher.on('end', function() {

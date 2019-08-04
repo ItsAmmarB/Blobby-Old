@@ -243,6 +243,7 @@ message.channel.send(embed)
 //===================================================Ban, Kick, Mute, Unmute
 
 module.exports.userBannedWithRecord = (message, mName, reason) => {
+        if(!reason) reason = "No reason provided"
         let embed = new Discord.RichEmbed()
         .setDescription(`\`\`${mName}\`\`` + " has been banned for ``" + reason + "``")
         .setFooter("This action has been logged to database")
@@ -253,8 +254,18 @@ message.channel.send(embed)
 }
 
 module.exports.userBannedWithoutRecord = (message, mName, reason) => {
+        if(!reason) reason = "No reason provided"
         let embed = new Discord.RichEmbed()
         .setDescription(`\`\`${mName}\`\`` + " has been banned for ``" + reason + "``")
+        .setColor(sColor)
+
+
+message.channel.send(embed)
+}
+
+module.exports.unbanned = (message, mName) => {
+        let embed = new Discord.RichEmbed()
+        .setDescription(`\`\`${mName}\`\`` + " has been unbanned")
         .setColor(sColor)
 
 

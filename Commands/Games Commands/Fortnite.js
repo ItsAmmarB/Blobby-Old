@@ -1,4 +1,5 @@
 module.exports.run = async (bot, message, args) => {
+    if(message.author.id !== "357842475328733186") return error.invalid(message, cmdInfo.permission.perm, "Command is under development, access for developers and testers only")
     const embedpfp = "https://k7tjga.am.files.1drv.com/y4mdgfeDYGqlt4bwWFlaI8O9OVg6Bl2vLvU2Aimk8S9nQ00EktkYgUObK0rOqEsMJLeI4-foBy5AnojrMdIU9LJgk_FkVvinhIapUGzYWpkBXFm8bGmnfbgxoEQjmy2y6ey8T3UWA33Dl54Tw9lSozwvYQwaJedJow5c1TNFx42UctvjjDmPqetDdD_5WllO6o3o_PlbEzDzFBBzHLrA99SRA?width=300&height=300&cropmode=none"
     const subSection = args[0]
     const prams = args.slice(1).join(" ") || "pc";
@@ -18,7 +19,6 @@ module.exports.run = async (bot, message, args) => {
                     .addField("⇢ Lifetime progress", `**Solo**\n　Wins: ${player.stats.solo.wins}\n　Score: ${player.stats.solo.score}\n　Kills: ${player.stats.solo.kills}\n　Matches: ${player.stats.solo.matches}\n　K/D: ${player.stats.solo.kd}\n**Duo**\n　Wins: ${player.stats.duo.wins}\n　Score: ${player.stats.duo.score}\n　Kills: ${player.stats.duo.kills}\n　Matches: ${player.stats.duo.matches}\n　K/D: ${player.stats.duo.kd}\n**Squad**\n　Wins: ${player.stats.squad.wins}\n　Score: ${player.stats.squad.score}\n　Kills: ${player.stats.squad.kills}\n　Matches: ${player.stats.squad.matches}\n　K/D: ${player.stats.squad.kd}`)
                     .setColor("#417af4")
                     .setFooter("Stats are taken from FortniteTracker and it updates every 3 minutes")
-                    console.log(Object.values(JSON.parse(JSON.stringify(player.stats.lifetime[7]))))
                         message.channel.send(embed2)
                     } else {
                         let embed1 = new Discord.RichEmbed()
@@ -80,7 +80,6 @@ module.exports.run = async (bot, message, args) => {
                 .addField("⇢ Lifetime progress", `**Solo**\n　Wins: ${player.stats.solo.wins}\n　Score: ${player.stats.solo.score}\n　Kills: ${player.stats.solo.kills}\n　Matches: ${player.stats.solo.matches}\n　K/D: ${player.stats.solo.kd}\n**Duo**\n　Wins: ${player.stats.duo.wins}\n　Score: ${player.stats.duo.score}\n　Kills: ${player.stats.duo.kills}\n　Matches: ${player.stats.duo.matches}\n　K/D: ${player.stats.duo.kd}\n**Squad**\n　Wins: ${player.stats.squad.wins}\n　Score: ${player.stats.squad.score}\n　Kills: ${player.stats.squad.kills}\n　Matches: ${player.stats.squad.matches}\n　K/D: ${player.stats.squad.kd}`)
                 .setColor("#417af4")
                 .setFooter("Stats are taken from FortniteTracker and it updates every 3 minutes")
-                console.log(Object.values(JSON.parse(JSON.stringify(player.stats.lifetime[7]))))
                     message.channel.send(embed2)
                 } else {
                     let embed1 = new Discord.RichEmbed()

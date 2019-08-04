@@ -1,5 +1,5 @@
 module.exports.run = async (bot, message, args) => {
-    if(!guilds[message.guild.id]) return error.invalid(message, "Volume", "There is no active stream in this guild")
+    if(!message.guild.members.get(bot.user.id).voiceChannel ) return error.invalid(message, "Volume", "There is no active stream in this guild")
     if(!args[0]) return message.channel.send(new Discord.RichEmbed()
         .setTitle("Volume")
         .setDescription(`Current Volume is set to: ${guilds[message.guild.id].volume}`)

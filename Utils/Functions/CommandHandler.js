@@ -1,5 +1,8 @@
 module.exports.handle = async (message) => {
   if(message.author.bot) return;
+  if(message.channel.type === "dm") {
+    return;
+  };
 
   await Guild.findOne({_id: message.guild.id, "guildInfo.guildID": message.guild.id}, (err, res) => {if(!res) {newGuild(message.guild)}}).then(guild => global.prefix = guild.guildSettings.prefix)
   if(!message.content.startsWith(prefix)) return;
@@ -33,11 +36,15 @@ module.exports.handle = async (message) => {
     var commandEvent = bot.utilityCommands.get(command.slice(prefix.length));
   } else if(bot.informationCommands.get(command.slice(prefix.length))) {
     var commandEvent = bot.informationCommands.get(command.slice(prefix.length));
+  } else if(bot.gamesCommands.get(command.slice(prefix.length))) {
+    var commandEvent = bot.gamesCommands.get(command.slice(prefix.length));
+  } else if(bot.developmentCommands.get(command.slice(prefix.length))) {
+    var commandEvent = bot.developmentCommands.get(command.slice(prefix.length));
   } 
   
   //Short Command Caller
-  else if(bot.setupAliases.get(command.slice(prefix.length))) {
-    var commandEvent = bot.setupAliases.get(command.slice(prefix.length));
+    else if(bot.settingsAliases.get(command.slice(prefix.length))) {
+    var commandEvent = bot.settingsAliases.get(command.slice(prefix.length));
   } else if(bot.informationAliases.get(command.slice(prefix.length))) {
     var commandEvent = bot.informationAliases.get(command.slice(prefix.length));
   } else if(bot.moderationAliases.get(command.slice(prefix.length))) {
@@ -48,8 +55,10 @@ module.exports.handle = async (message) => {
     var commandEvent = bot.miscellaneousAliases.get(command.slice(prefix.length));
   } else if(bot.utilityAliases.get(command.slice(prefix.length))) {
     var commandEvent = bot.utilityAliases.get(command.slice(prefix.length));
-  } else {
-    return;
+  } else if(bot.gamesAliases.get(command.slice(prefix.length))) {
+    var commandEvent = bot.gamesAliases.get(command.slice(prefix.length));
+  } else if(bot.developmentAliases.get(command.slice(prefix.length))) {
+    var commandEvent = bot.developmentAliases.get(command.slice(prefix.length));
   }
 
 

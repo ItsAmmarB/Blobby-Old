@@ -12,17 +12,17 @@ module.exports.processErrorA = function processError() {
         console.log(colors.bold.red(`[Error Message]: ${error.message}`));
         console.log(colors.bold.red(`[Error Stack]: ${error.stack}`));
         console.log(colors.bold.red(`----------------------------[Error Caught]----------------------------`));
-        if(!lastMessage) return;
-            console.log(colors.bold.red(`----------------------------[Possible Cause]----------------------------`));
-            console.log(colors.bold.red(`[Message ID]: ${lastMessage.id}`));
-            console.log(colors.bold.red(`[Message Guild ID]: ${lastMessage.guild.id || "DM"}`));
-            console.log(colors.bold.red(`[Message Channel ID]: ${lastMessage.channel.id}`));
-            console.log(colors.bold.red(`[Message Author Username]: ${lastMessage.author.tag}`));
-            console.log(colors.bold.red(`[Message Author ID]: ${lastMessage.author.id}`));
-            console.log(colors.bold.red(`[Message Timestamp]: ${lastMessage.createdTimestamp}`));
-            console.log(colors.bold.red(`[Message Content]: ${lastMessage.content}`));
-            console.log(colors.bold.red(`----------------------------[Possible Cause]----------------------------`));
-            lastMessage.channel.send(errRespond)
+        // if(!lastMessage) return;
+        //     console.log(colors.bold.red(`----------------------------[Possible Cause]----------------------------`));
+        //     console.log(colors.bold.red(`[Message ID]: ${lastMessage.id}`));
+        //     console.log(colors.bold.red(`[Message Guild ID]: ${lastMessage.guild.id || "DM"}`));
+        //     console.log(colors.bold.red(`[Message Channel ID]: ${lastMessage.channel.id}`));
+        //     console.log(colors.bold.red(`[Message Author Username]: ${lastMessage.author.tag}`));
+        //     console.log(colors.bold.red(`[Message Author ID]: ${lastMessage.author.id}`));
+        //     console.log(colors.bold.red(`[Message Timestamp]: ${lastMessage.createdTimestamp}`));
+        //     console.log(colors.bold.red(`[Message Content]: ${lastMessage.content}`));
+        //     console.log(colors.bold.red(`----------------------------[Possible Cause]----------------------------`));
+            //lastMessage.channel.send(errRespond)
     });
 }
 module.exports.processErrorB = function processError() {
@@ -43,7 +43,7 @@ module.exports.processErrorB = function processError() {
             console.log(colors.bold.red(`[Message Timestamp]: ${lastMessage.createdTimestamp}`));
             console.log(colors.bold.red(`[Message Content]: ${lastMessage.content}`));
             console.log(colors.bold.red(`----------------------------[Possible Cause]----------------------------`));
-            lastMessage.channel.send(errRespond)
+            //lastMessage.channel.send(errRespond)
     });
 }
 module.exports.processException = function processError() {
@@ -74,7 +74,7 @@ module.exports.processWarning = function processError() {
             console.log(colors.bold.red(`[Message Timestamp]: ${lastMessage.createdTimestamp}`));
             console.log(colors.bold.red(`[Message Content]: ${lastMessage.content}`));
             console.log(colors.bold.red(`----------------------------[Possible Cause]----------------------------`));
-            lastMessage.channel.send(errRespond)
+            //lastMessage.channel.send(errRespond)
     });
 }
 
@@ -97,7 +97,7 @@ module.exports.botError = function botError(error) {
             console.log(colors.bold.red(`[Message Timestamp]: ${lastMessage.createdTimestamp}`));
             console.log(colors.bold.red(`[Message Content]: ${lastMessage.content}`));
             console.log(colors.bold.red(`----------------------------[Possible Cause]----------------------------`));
-            lastMessage.channel.send(errRespond)
+            //lastMessage.channel.send(errRespond)
     });
 }
 module.exports.botWarning = function processError() {
@@ -120,6 +120,6 @@ module.exports.botWarning = function processError() {
             console.log(colors.bold.red(`[Message Timestamp]: ${lastMessage.createdTimestamp}`));
             console.log(colors.bold.red(`[Message Content]: ${lastMessage.content}`));
             console.log(colors.bold.red(`----------------------------[Possible Cause]----------------------------`));
-            lastMessage.channel.send(errRespond)
+            //lastMessage.channel.send(errRespond)
     });
 }

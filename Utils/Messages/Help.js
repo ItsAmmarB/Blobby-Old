@@ -20,10 +20,10 @@ message.channel.send(embed);
 
 module.exports.sectionHelpMessage = (message) => {
         let section;
-        if(cmdInfo.sections.find(sec => sec.name === message.content.split(" ")[1].split("")[0].toUpperCase()+message.content.split(" ")[1].split("").slice(1).join("").toLowerCase())){
-                section = cmdInfo.sections.find(sec => sec.name === message.content.split(" ")[1].split("")[0].toUpperCase()+message.content.split(" ")[1].split("").slice(1).join("").toLowerCase())
+        if(cmdInfo.sections.find(sec => sec.name.toLowerCase() === message.content.split(" ")[1].toLowerCase())){
+                section = cmdInfo.sections.find(sec => sec.name.toLowerCase() === message.content.split(" ")[1].toLowerCase())
         } else {
-                section = cmdInfo.sections.find(sec => sec.shortcut === message.content.split(" ")[1].toLowerCase())
+                section = cmdInfo.sections.find(sec => sec.shortcut.toLowerCase() === message.content.split(" ")[1].toLowerCase())
         }
         let embed = new Discord.RichEmbed()
             .setDescription("brief information about the **" + cmdInfo.help.name+"."+section.name + "** command(shortcut:" + cmdInfo.trigger.aliases +" "+ section.shortcut+ ")")

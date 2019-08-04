@@ -6,9 +6,8 @@ module.exports.run = async (bot, message, args) => {
     .then(bans => {
       if(!bans.get(mID)) return error.is(message, mID, "is not", "Banned")
     } )
-    if(err) console.error(err);
   message.guild.unban(mID)
-    .then(user => success.success(message, user.username, "Unbanned"))
+    .then(user => success.unbanned(message, user.username))
     
 
 };

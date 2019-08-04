@@ -11,9 +11,8 @@ module.exports.Settings = async (path) => {
         }
         console.log(colors.magenta(`==> loading ${jsFiles.length} Settings commands!`))
         jsFiles.forEach((f, i) => {
-          let props = require(`.${path}/${f}`);
+          let props = require(`${path}/${f}`);
           console.log(colors.cyan(`${i + 1}: ${f} loaded!`))
-          bot.allCommands.set(props.information.trigger.name, props);
           bot.settingsCommands.set(props.information.trigger.name, props);
           bot.settingsAliases.set(props.information.trigger.aliases, props);
         });
@@ -32,7 +31,7 @@ module.exports.Music = async (path) => {
         console.log(colors.magenta(`==> loading ${jsFiles.length} music commands!`))
     
         jsFiles.forEach((f, i) => {
-          let props = require(`.${path}/${f}`);
+          let props = require(`${path}/${f}`);
           console.log(colors.cyan(`${i + 1}: ${f} loaded!`))
           bot.allCommands.set(props.information.trigger.name, props);
           bot.musicCommands.set(props.information.trigger.name, props);
@@ -53,9 +52,8 @@ module.exports.Moderation = async (path) => {
         console.log(colors.magenta(`==> loading ${jsFiles.length} moderation commands!`))
     
         jsFiles.forEach((f, i) => {
-          let props = require(`.${path}/${f}`);
+          let props = require(`${path}/${f}`);
           console.log(colors.cyan(`${i + 1}: ${f} loaded!`))
-          bot.allCommands.set(props.information.trigger.name, props);
           bot.moderationCommands.set(props.information.trigger.name, props);
           bot.moderationAliases.set(props.information.trigger.aliases, props);
         });
@@ -74,7 +72,7 @@ module.exports.Miscellaneous = async (path) => {
         console.log(colors.magenta(`==> loading ${jsFiles.length} miscellaneous commands!`))
     
         jsFiles.forEach((f, i) => {
-          let props = require(`.${path}/${f}`);
+          let props = require(`${path}/${f}`);
           console.log(colors.cyan(`${i + 1}: ${f} loaded!`))
           bot.allCommands.set(props.information.trigger.name, props);
           bot.miscellaneousCommands.set(props.information.trigger.name, props);
@@ -83,18 +81,18 @@ module.exports.Miscellaneous = async (path) => {
       });
 }
 
-module.exports.Development = async (path) => {
+module.exports.Developers = async (path) => {
     await fs.readdir(path, (err, files) => {
         if(err) console.error(err);
         let jsFiles = files.filter(f => f.split(".").pop() === "js");
         if(jsFiles.length <= 0) {
-          console.log(colors.magenta("==> No development commands to load!"));
+          console.log(colors.magenta("==> No Developers commands to load!"));
           return;
         }
-        console.log(colors.magenta(`==> loading ${jsFiles.length} development commands!`))
+        console.log(colors.magenta(`==> loading ${jsFiles.length} Developers commands!`))
     
         jsFiles.forEach((f, i) => {
-          let props = require(`.${path}/${f}`);
+          let props = require(`${path}/${f}`);
           console.log(colors.cyan(`${i + 1}: ${f} loaded!`))
           bot.devCommands.set(props.information.trigger.name, props);
           bot.devAliases.set(props.information.trigger.aliases, props);
@@ -102,18 +100,38 @@ module.exports.Development = async (path) => {
       });
 }
 
-module.exports.Testing = async (path) => {
+module.exports.Development = async (path) => {
   await fs.readdir(path, (err, files) => {
       if(err) console.error(err);
       let jsFiles = files.filter(f => f.split(".").pop() === "js");
       if(jsFiles.length <= 0) {
-        console.log(colors.magenta("==> No Testing commands to load!"));
+        console.log(colors.magenta("==> No Development commands to load!"));
         return;
       }
-      console.log(colors.magenta(`==> loading ${jsFiles.length} testing commands!`))
+      console.log(colors.magenta(`==> loading ${jsFiles.length} Development commands!`))
   
       jsFiles.forEach((f, i) => {
-        let props = require(`.${path}/${f}`);
+        let props = require(`${path}/${f}`);
+        console.log(colors.cyan(`${i + 1}: ${f} loaded!`))
+        bot.allCommands.set(props.information.trigger.name, props);
+        bot.developmentCommands.set(props.information.trigger.name, props);
+        bot.developmentAliases.set(props.information.trigger.aliases, props);
+      });
+    });
+}
+
+module.exports.Testers = async (path) => {
+  await fs.readdir(path, (err, files) => {
+      if(err) console.error(err);
+      let jsFiles = files.filter(f => f.split(".").pop() === "js");
+      if(jsFiles.length <= 0) {
+        console.log(colors.magenta("==> No Testers commands to load!"));
+        return;
+      }
+      console.log(colors.magenta(`==> loading ${jsFiles.length} Testers commands!`))
+  
+      jsFiles.forEach((f, i) => {
+        let props = require(`${path}/${f}`);
         console.log(colors.cyan(`${i + 1}: ${f} loaded!`))
         bot.testCommands.set(props.information.trigger.name, props);
         bot.testAliases.set(props.information.trigger.aliases, props);
@@ -132,7 +150,7 @@ module.exports.Utility = async (path) => {
       console.log(colors.magenta(`==> loading ${jsFiles.length} Utility commands!`))
   
       jsFiles.forEach((f, i) => {
-        let props = require(`.${path}/${f}`);
+        let props = require(`${path}/${f}`);
         console.log(colors.cyan(`${i + 1}: ${f} loaded!`))
         bot.allCommands.set(props.information.trigger.name, props);
         bot.utilityCommands.set(props.information.trigger.name, props);
@@ -152,7 +170,7 @@ module.exports.Games = async (path) => {
       console.log(colors.magenta(`==> loading ${jsFiles.length} Games commands!`))
   
       jsFiles.forEach((f, i) => {
-        let props = require(`.${path}/${f}`);
+        let props = require(`${path}/${f}`);
         console.log(colors.cyan(`${i + 1}: ${f} loaded!`))
         bot.allCommands.set(props.information.trigger.name, props);
         bot.gamesCommands.set(props.information.trigger.name, props);
@@ -172,7 +190,7 @@ module.exports.Information = async (path) => {
       console.log(colors.magenta(`==> loading ${jsFiles.length} Information commands!`))
   
       jsFiles.forEach((f, i) => {
-        let props = require(`.${path}/${f}`);
+        let props = require(`${path}/${f}`);
         console.log(colors.cyan(`${i + 1}: ${f} loaded!`))
         bot.allCommands.set(props.information.trigger.name, props);
         bot.informationCommands.set(props.information.trigger.name, props);

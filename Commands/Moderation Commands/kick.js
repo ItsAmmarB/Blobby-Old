@@ -21,7 +21,7 @@ module.exports.run = async (bot, message, args) => {
                 reason: reason,
                 channelID: message.channel.id
               },
-                moderator: message.member.id
+              moderator: message.member.id
               }
             } 
           },
@@ -39,7 +39,7 @@ module.exports.run = async (bot, message, args) => {
       try{ 
         await mName.send(embed)
       } catch(err) {
-        console.log(`[Error] Couldn\'t message ${mName.user.tag} of his kick in ${message.guild.name}!`)
+        return;
       };
       success.userKickedWithRecord(message, mName, reason)
       mName.kick(reason)
@@ -53,7 +53,7 @@ module.exports.run = async (bot, message, args) => {
       try{ 
         await mName.send(embed)
       } catch(err) {
-        console.log(`[Error] Couldn\'t message ${mName.user.tag} of his kick in ${message.guild.name}!`)
+        return;
       };
       success.userKickedWithoutRecord(message, mName, reason)
       mName.kick(reason)
@@ -75,8 +75,7 @@ module.exports.run = async (bot, message, args) => {
         try{ 
           await mName.send(embed)
         } catch(err) {
-          console.log(err)
-          console.log(`[Error] Couldn\'t message ${mName.user.tag} of his kick in ${message.guild.name}!`)
+          return;
         };
         success.userKickedWithoutRecord(message, mName, reason)
         mName.kick(reason)
