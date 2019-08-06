@@ -62,7 +62,7 @@ module.exports.run = async (bot, message, args) => {
                             .setColor(color)
                             .setAuthor("FiveM Server Players (IP: "+ arg+")")
                             .setTitle(`**⇢  ${e}** out of **${start2.vars.sv_maxClients}** Players.`)
-                            .setDescription(playuers)
+                            .setDescription(players)
                             .addField("**⇢** Join Server", "<fivem://connect/" + arg + "/>")
                             .setThumbnail("http://thatziv.ddns.net/assets/fivem.png")
                             message.channel.send({embed: embed});
