@@ -18,20 +18,13 @@ global.atob = require('atob');
 global.btoa = require('btoa');
 global.nau = require('nau')
 global.mongoose = require('mongoose');
-const directory = '/Users/Administrator/Desktop/Blobby'
-
-
-
-//Mongoose Database Connection Establisher
-mongoose.connect('mongodb://localhost:27017/Blobby', { useNewUrlParser: true, useFindAndModify: false });
 
 
 //Utilties
-global.Config = JSON.parse(fs.readFileSync(directory + '/Config.json', 'utf-8'));
-global.success = require(directory + '/Utils/Messages/Success.js')
-global.error = require(directory + '/Utils/Messages/Error.js')
-global.help = require(directory + '/Utils/Messages/Help.js')
-
+global.Config = JSON.parse(fs.readFileSync('./Config.json', 'utf-8'));
+global.success = require('./Utils/Messages/Success.js')
+global.error = require('./Utils/Messages/Error.js')
+global.help = require('./Utils/Messages/Help.js')
 
 
 //Tokens and API-Keys
@@ -40,13 +33,13 @@ global.dbl = new DBL(Config.Discord_Bots_List_API, bot)
 global.steam = new SteamAPI(Config.Steam_API_Key);
 global.ft = new Fortnite(Config.Fortnite_API_KEY)
 global.youtube = new YouTube(Config.YouTube_API_Key)
-global.defPrefix = '/';
+global.prefix = '/';
 
 
-//Database Schema's
-global.User = require(directory + '/Database Models/User.js')
-global.Guild = require(directory + '/Database Models/Guild.js')
-global.Privilege = require(directory + '/Database Models/Privilege.js')
+//Database
+global.guildDatabase = require('./Database/guilds.json');
+global.userDatabase = require('./Database/users.json');
+global.privilegeDatabase = require('./Database/privileges.json');
 
 
 //Commands Collectors
@@ -78,29 +71,29 @@ bot.devAliases = new Discord.Collection();
 //Function Import
 
 //Database Functions
-global.newGuild = require(directory + '/Utils/Functions/Database.js').newGuild;
-global.newUser = require(directory + '/Utils/Functions/Database.js').newUser;
-global.addGuild = require(directory + '/Utils/Functions/Database.js').addGuild;
-global.newPrivilege = require(directory + '/Utils/Functions/Database.js').newPrivilege;
-global.addPrivilege = require(directory + '/Utils/Functions/Database.js').addPrivilege;
-global.delPrivilege = require(directory + '/Utils/Functions/Database.js').delPrivilege;
-global.newFiveM = require(directory + '/Utils/Functions/Database.js').newFiveM;
-global.delFiveM = require(directory + '/Utils/Functions/Database.js').delFiveM;
+global.newGuild = require('./Utils/Functions/Database.js').newGuild;
+global.newUser = require('./Utils/Functions/Database.js').newUser;
+global.addGuild = require('./Utils/Functions/Database.js').addGuild;
+global.newPrivilege = require('./Utils/Functions/Database.js').newPrivilege;
+global.addPrivilege = require('./Utils/Functions/Database.js').addPrivilege;
+global.delPrivilege = require('./Utils/Functions/Database.js').delPrivilege;
+global.newFiveM = require('./Utils/Functions/Database.js').newFiveM;
+global.delFiveM = require('./Utils/Functions/Database.js').delFiveM;
 
 //Other Functions
-const CommandLoader = require(directory + '/Utils/Functions/CommandsLoader.js');
-const CommandHandler = require(directory + '/Utils/Functions/CommandHandler.js');
-global.LogsHandler = require(directory + '/Utils/Functions/LogsHandler.js');
-global.ErrorHandler = require(directory + '/Utils/Functions/ErrorHandler.js');
-global.modifierCheck = require(directory + '/Utils/Functions/Checkers.js').modifierCheck;
-global.permCheck = require(directory + '/Utils/Functions/Checkers.js').permCheck;
-global.permCheckDev = require(directory + '/Utils/Functions/Checkers.js').permCheckDev;
-global.skip_song = require(directory + '/Utils/Functions/YouTube.js').skip_song;
-global.playMusic = require(directory + '/Utils/Functions/YouTube.js').playMusic;
-global.add_to_queue = require(directory + '/Utils/Functions/YouTube.js').add_to_queue;
-global.getID = require(directory + '/Utils/Functions/YouTube.js').getID;
-global.search_video = require(directory + '/Utils/Functions/YouTube.js').search_video;
-global.isYoutube = require(directory + '/Utils/Functions/YouTube.js').isYoutube;
+const CommandLoader = require('./Utils/Functions/CommandsLoader.js');
+const CommandHandler = require('./Utils/Functions/CommandHandler.js');
+global.LogsHandler = require('./Utils/Functions/LogsHandler.js');
+global.ErrorHandler = require('./Utils/Functions/ErrorHandler.js');
+global.modifierCheck = require('./Utils/Functions/Checkers.js').modifierCheck;
+global.permCheck = require('./Utils/Functions/Checkers.js').permCheck;
+global.permCheckDev = require('./Utils/Functions/Checkers.js').permCheckDev;
+global.skip_song = require('./Utils/Functions/YouTube.js').skip_song;
+global.playMusic = require('./Utils/Functions/YouTube.js').playMusic;
+global.add_to_queue = require('./Utils/Functions/YouTube.js').add_to_queue;
+global.getID = require('./Utils/Functions/YouTube.js').getID;
+global.search_video = require('./Utils/Functions/YouTube.js').search_video;
+global.isYoutube = require('./Utils/Functions/YouTube.js').isYoutube;
 
 //Error Handler
 ErrorHandler.processErrorA();
@@ -124,34 +117,37 @@ dbl.on('error', e => {
  
 //Commands Loader 
 bot.on('ready', async () => {
-  await CommandLoader.Settings(directory + '/Commands/Settings Commands');
-  await CommandLoader.Miscellaneous(directory + '/Commands/Miscellaneous Commands');
-  await CommandLoader.Moderation(directory + '/Commands/Moderation Commands');
-  await CommandLoader.Utility(directory + '/Commands/Utility Commands');
-  await CommandLoader.Music(directory + '/Commands/Music Commands');
-  await CommandLoader.Games(directory + '/Commands/Games Commands');
-  await CommandLoader.Information(directory + '/Commands/Information Commands');
-  await CommandLoader.Development(directory + '/Commands/Development Commands');
+  bot.user.setStatus('dnd')
+  bot.user.setActivity('myself getting recoded!', { type: 'WATCHING'})
+  
+  await CommandLoader.Settings('./Commands/Settings Commands');
+  await CommandLoader.Miscellaneous('./Commands/Miscellaneous Commands');
+  await CommandLoader.Moderation('./Commands/Moderation Commands');
+  await CommandLoader.Utility('./Commands/Utility Commands');
+  await CommandLoader.Music('./Commands/Music Commands');
+  await CommandLoader.Games('./Commands/Games Commands');
+  await CommandLoader.Information('./Commands/Information Commands');
+  await CommandLoader.Development('./Commands/Development Commands');
 
-  await CommandLoader.Developers(directory + '/Commands/Developers Commands');
-  await CommandLoader.Testers(directory + '/Commands/Testers Commands');
+  await CommandLoader.Developers('./Commands/Developers Commands');
+  await CommandLoader.Testers('./Commands/Testers Commands');
   
   
   setInterval(() => {
     dbl.postStats(bot.guilds.size);
 }, 1800000);
 
-bot.user.setPresence({ game: { name: 'with '+ bot.guilds.size + ' guilds!' }, status: 'idle' })
-setInterval(() => {
-  if(!bot.user.presence.game.toString().includes('users')){
-    let totalMembersCount = [];
-    const reducer = (accumulator, currentValue) => accumulator + currentValue
-    bot.guilds.forEach(guild=> totalMembersCount.push(guild.members.size))
-    bot.user.setPresence({ game: { name: 'with '+ totalMembersCount.reduce(reducer) + ' users!' }, status: 'idle' })
-  } else {
-    bot.user.setPresence({ game: { name: 'with '+ bot.guilds.size + ' guilds!' }, status: 'idle' })
-  }
-}, 60000);
+
+// setInterval(() => {
+//   if(!bot.user.presence.game.toString().includes('users')){
+//     let totalMembersCount = [];
+//     const reducer = (accumulator, currentValue) => accumulator + currentValue
+//     bot.guilds.forEach(guild=> totalMembersCount.push(guild.memberCount))
+//     bot.user.setPresence({ game: { name: 'with '+ totalMembersCount.reduce(reducer) + ' users!' }, status: 'idle' })
+//   } else {
+//     bot.user.setPresence({ game: { name: 'with '+ bot.guilds.size + ' guilds!' }, status: 'idle' })
+//   }
+// }, 60000);
 });
 
 

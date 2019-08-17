@@ -1,42 +1,12 @@
 module.exports.permCheck = (message, reqPerm, callback) => {
-if(message.member.hasPermission(["ADMINISTRATOR"])) return callback(true);
-Guild.findOne({_id: message.guild.id, "guildSettings.permissionsMap.users.userID": message.author.id})
-  .then(res => {
-    if(res) {
-      if(res.guildSettings.permissionsMap.users.find(user => user.userID === message.author.id).permissions.includes(reqPerm)||res.guildSettings.permissionsMap.users.find(user => user.userID === message.author.id).permissions.includes("All")) {
-        return callback(true)
-      } else {
-        Guild.findOne({_id: message.guild.id})
-        .then(res => {
-          try {
-            if(!res.guildSettings.permissionsMap.roles.find(role => role.roleID === message.member.roles.find(role2 => role2.id === role.roleID).id)){
-              return callback(false)
-            }
-          } catch(err){
-            return callback(false)
-          }
-          if(res.guildSettings.permissionsMap.roles.find(role => role.roleID === message.member.roles.find(role2 => role2.id === role.roleID).id).permissions.includes(reqPerm)||res.guildSettings.permissionsMap.roles.find(role => role.roleID === message.member.roles.find(role2 => role2.id === role.roleID).id).permissions.includes("All")) {
-            return callback(true)
-          } else {
-            return callback(false)
-          }
-        })
-      }
-    } else {
-    Guild.findOne({_id: message.guild.id})
-      .then(res => {
-        if(!res.guildSettings.permissionsMap.roles.find(role => message.member.roles.get(role.roleID))) {
-          return callback(false)
-        } else {
-          if(res.guildSettings.permissionsMap.roles.find(role => role.roleID === message.member.roles.find(role2 => role2.id === role.roleID).id).permissions.includes(reqPerm)||res.guildSettings.permissionsMap.roles.find(role => role.roleID === message.member.roles.find(role2 => role2.id === role.roleID).id).permissions.includes("All")) {
-            return callback(true)
-          } else {
-            return callback(false)
-          }
-        }
-      })
-    }
-  })
+// if(message.member.hasPermission(["ADMINISTRATOR"])) return callback(true);
+  if(guildDatabase[message.guild.id].guildSettings.permissionsMap.users[message.author.id] && guildDatabase[message.guild.id].guildSettings.permissionsMap.users[message.author.id].permissions[reqPerm]) return callback(true);
+  const rolesWithPermissions = message.member.roles.filter(role => guildDatabase[message.guild.id].guildSettings.permissionsMap.roles[role.id]);
+  if(rolesWithPermissions.size < 1) return callback(false)
+  // if()
+  console.log(rolesWithPermissions.size);
+  // if( ) return callback(true);
+  return callback(false)
 }
 
 
@@ -83,80 +53,7 @@ bot.on("message", message => {
 })
 
 module.exports.permCheckTest = (message, callback) => {
-  Privilege.findOne({_id: message.author.id})
-  .then(res => {
-    if(res){
-      if(res.privileges.find(priv => priv.permissions.includes(cmdInfo.permission.permLevel))) {
-        return callback(true)
-      } else {
-        Privilege.findOne({_id: message.author.id})
-        .then(res => {
-          if(res){
-            if(res.privileges.find(priv => priv.permissions.includes(cmdInfo.permission.permLevel))) {
-              return callback(true)
-            } else {
-              Privilege.findOne({_id: message.author.id})
-              .then(res => {
-                if(res){
-                  if(res.privileges.find(priv => priv.permissions.includes(cmdInfo.permission.permLevel))) {
-                    return callback(true)
-                  } else {
-                    return callback(false)
-                  }
-                } else {
-                  return callback(false)
-                }
-              })
-            }
-          } else {
-            Privilege.findOne({_id: message.author.id})
-            .then(res => {
-              if(res){
-                return callback(true)
-              } else {
-                return callback(false)
-              }
-            })
-          }
-        })
-      }
-    } else {
-      Privilege.findOne({_id: message.author.id})
-        .then(res => {
-          if(res){
-            if(res.privileges.find(priv => priv.permissions.includes(cmdInfo.permission.permLevel))) {
-              return callback(true)
-            } else {
-              Privilege.findOne({_id: message.author.id})
-              .then(res => {
-                if(res){
-                  if(res.privileges.find(priv => priv.permissions.includes(cmdInfo.permission.permLevel))) {
-                    return callback(true)
-                  } else {
-                    return callback(false)
-                  }
-                } else {
-                  return callback(false)
-                }
-              })
-            }
-          } else {
-            Privilege.findOne({_id: message.author.id})
-            .then(res => {
-              if(res){
-                if(res.privileges.find(priv => priv.permissions.includes(cmdInfo.permission.permLevel))) {
-                  return callback(true)
-                } else {
-                  return callback(false)
-                }
-              } else {
-                return callback(false)
-              }
-            })
-          }
-        })
-    }
-  })
+  return
 }
 
 module.exports.modifierCheck = (message, callback) => {

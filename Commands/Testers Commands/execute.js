@@ -1,11 +1,16 @@
 module.exports.run = async (bot, message, args) => {
-  eval(args.join(" "))    
+  try{
+  eval(args.join(" ")) 
+    } catch(err) {
+      error.error(message, "Error", err)
+    }
+    
 };
 
 exports.information = {
   trigger: {
-  name: "test",
-  aliases: "t",
+  name: "execute",
+  aliases: "exec",
   },
   permission: {
   permLevel: "Junior Developer",

@@ -1,9 +1,9 @@
 module.exports.newGuild = async (guild) => {
   let position =  await JSON.stringify(Object.values(bot.guilds.map(guild => ({id: guild.id, joinedAt: guild.joinedTimestamp}))).sort((first, second) => (first.joinedAt < second.joinedAt) ? -1 : (first.joinedAt > second.joinedAt) ? 1 : 0 )).split(guild.id).slice(0, 1).join("").split("\"id\"").length - 1
   let globalPermissions = [];
-  await bot.allCommands.map(command => command.information.permission.perm).forEach(perm => globalPermissions.push(perm))
-  await bot.allCommands.filter(command => command.information["sections"]).forEach(command => command.information.sections.filter(section => !section.permission["auth"]).forEach(section => globalPermissions.push(section.permission.perm)))
-  const newGuild = await new Guild({
+  await bot.allCommands.map(command => command.information.permission.perm).forEach(perm => globalPermissions.push(perm));
+  await bot.allCommands.filter(command => command.information["sections"]).forEach(command => command.information.sections.filter(section => !section.permission["auth"]).forEach(section => globalPermissions.push(section.permission.perm)));
+  const newGuild = {
       _id: guild.id,
       guildInfo: {
           guildID: guild.id,
@@ -12,7 +12,7 @@ module.exports.newGuild = async (guild) => {
 
       },
       guildSettings: {
-          prefix: defPrefix,
+          prefix: prefix,
           djRole: false,
           logsSystem: false,
           xpSystem: false,
@@ -24,19 +24,13 @@ module.exports.newGuild = async (guild) => {
                 roleID: guild.id,
                 permissions:globalPermissions
               }]
-          }
-      }
-    },{ strict: false })
-   await  newGuild.save()
-   await  guild.members.forEach(member => {
-      User.findOne({_id: member.id, "userInfo.userID": member.id}, (err, user) =>{
-        if(!user){
-          newUser(member)
-        } else {
-          addGuild(member)
+          },
+          fivemServer:{}
         }
-      })
-    })
+    };
+    guildDatabase[guild.id] = newGuild;
+    guild.members.forEach(async member => await newUser(member));
+    fs.writeFile('./Database/guilds.json', JSON.stringify(guildDatabase), function(err) {if(err) return console.error(err);});
 }
 
 
@@ -49,92 +43,71 @@ module.exports.newPrivilege = async (message, member, priv) => {
     seniordeveloper:{privilegeID: "112DEV"+member.id, rank: "Developer", permissions: ["Tester", "Junior Developer", "Advanced Developer", "Senior Developer"]},
     owner:{privilegeID: "OWN"+member.id, rank: "Owner", permissions: ["Tester", "Junior Developer", "Advanced Developer", "Senior Developer", "Owner"]},
   }
-  const newPriv = new Privilege({
+  const _priv = privileges[priv].rank
+  const newPriv = {
     _id: member.id,
     userInfo: {
         userID: member.id,
         createdAtTimestamp: member.createdTimestamp
     },
-    privileges:[{
+    privileges:{
+      _priv: {
         _id: privileges[priv].privilegeID,
         rank: privileges[priv].rank,
         permissions: privileges[priv].permissions,
         timestamp: nau(),
         grantedByID: message.author.id
-    }]
-  });
-  newPriv.save()
+      }
+    }
+  };
+  privilegeDatabase[member.id] = newPriv;
+  fs.writeFile('./Database/privileges.json', JSON.stringify(guildDprivilegeDatabaseatabase), function(err) {if(err) return console.error(err);});
+
 }
 
 
 module.exports.delPrivilege = async (message, member, priv) => {
-  const privileges = {
-    record:{perivilegeID: "90REC"+member.id, rank: "Record", permissions: ["infractions.record"]},
-    tester:{perivilegeID: "100TEST"+member.id, rank: "Tester", permissions: [bot.testCommand.map(cmd => cmd.information.permission.perm)]},
-    developer:{perivilegeID: "110DEV"+member.id, rank: "Developer", permissions: [bot.norCommands.map(cmd => cmd.information.permission.perm) +","+ bot.devCommands.map(cmd => cmd.information.permission.perm) +","+bot.testCommands.map(cmd => cmd.information.permission.perm) ]},
-    owner:{perivilegeID: "OWN"+member.id, rank: "Owner", permissions: [bot.norCommands.map(cmd => cmd.information.permission.perm) +","+ bot.devCommands.map(cmd => cmd.information.permission.perm) +","+bot.testCommands.map(cmd => cmd.information.permission.perm) ]},
-  }
-  Privilege.updateOne({_id: member.id}, {
-    $pull: {
-      privileges: {
-        _id: privileges[priv].privilegeID,
-      }
-    }
-  }, (err, res) => {if (err) console.log(err)})
-  Privilege.save
+  const _priv = privileges[priv].rank
+  delete privilegeDatabase[member.id].privileges[_priv];
+  fs.writeFile('./Database/privileges.json', JSON.stringify(guildDprivilegeDatabaseatabase), function(err) {if(err) return console.error(err);});
 }
 
 
 module.exports.addPrivilege = async (message, member, priv) => {
   const privileges = {
-    record:{perivilegeID: "90REC"+member.id, rank: "Record", permissions: ["infractions.record"]},
-    tester:{perivilegeID: "100TEST"+member.id, rank: "Tester", permissions: [bot.testCommand.map(cmd => cmd.information.permission.perm)]},
-    developer:{perivilegeID: "110DEV"+member.id, rank: "Developer", permissions: [bot.norCommands.map(cmd => cmd.information.permission.perm) +","+ bot.devCommands.map(cmd => cmd.information.permission.perm) +","+bot.testCommands.map(cmd => cmd.information.permission.perm) ]},
-    owner:{perivilegeID: "OWN"+member.id, rank: "Owner", permissions: [bot.norCommands.map(cmd => cmd.information.permission.perm) +","+ bot.devCommands.map(cmd => cmd.information.permission.perm) +","+bot.testCommands.map(cmd => cmd.information.permission.perm) ]},
+    record:{privilegeID: "90REC"+member.id, rank: "Record", permissions: ["infractions.record"]},
+    tester:{privilegeID: "100TEST"+member.id, rank: "Tester", permissions: [bot.testCommand.map(cmd => cmd.information.permission.perm)]},
+    developer:{privilegeID: "110DEV"+member.id, rank: "Developer", permissions: [bot.norCommands.map(cmd => cmd.information.permission.perm) +","+ bot.devCommands.map(cmd => cmd.information.permission.perm) +","+bot.testCommands.map(cmd => cmd.information.permission.perm) ]},
+    owner:{privilegeID: "OWN"+member.id, rank: "Owner", permissions: [bot.norCommands.map(cmd => cmd.information.permission.perm) +","+ bot.devCommands.map(cmd => cmd.information.permission.perm) +","+bot.testCommands.map(cmd => cmd.information.permission.perm) ]},
   }
-  Privilege.updateOne({_id: member.id}, {
-    $push: {
-      privileges: {
-        _id: privileges[priv].privilegeID,
-        rank: privileges[priv].rank,
-        permissions: privileges[priv].permissions,
-        timestamp: nau(),
-        grantedByID: message.author.id
-      }
-    }
-  }, (err, res) => {if (err) console.log(err)})
-  Privilege.save
+  const _priv = privileges[priv].rank
+  const privilege = {
+    _id: privileges[priv].privilegeID,
+    rank: privileges[priv].rank,
+    permissions: privileges[priv].permissions,
+    timestamp: nau(),
+    grantedByID: message.author.id
+  };
+  privilegeDatabase[member.id].privileges[_priv] = privilege;
+  fs.writeFile('./Database/privileges.json', JSON.stringify(privilegeDatabase), function(err) {if(err) return console.error(err);});
 }
 
 
 module.exports.newFiveM = async (message, serverName, serverIP) => {
-  Guild.updateOne({_id: message.guild.id}, {
-    $push:{
-      "guildSettings.fiveMServers":{
-        serverName: serverName,
-        serverIP: serverIP
-      }
-    }
-  }, (err, res) => {if (err) console.log(err)})
-  Guild.save
+  guildDatabase[message.guild.id].guildSetting.fivemServers[serverName] = { name: serverName, ip:serverIP};
+  fs.writeFile('./Database/guilds.json', JSON.stringify(guildDatabase), function(err) {if(err) return console.error(err);});
 }
 
 
 module.exports.delFiveM = async (message, serverName) => {
-  Guild.updateOne({_id: message.guild.id}, {
-    $pull:{
-      "guildSettings.fiveMServers":{
-        serverName: serverName
-      }
-    }
-  }, (err, res) => {if (err) console.log(err)})
-  Guild.save
+ delete guildDatabase[message.guild.id].guildSetting.fivemServers[serverName];
+ fs.writeFile('./Database/guilds.json', JSON.stringify(guildDatabase), function(err) {if(err) return console.error(err);});
 }
 
 
 module.exports.newUser = async (member) => {
   let position = JSON.stringify(Object.values(member.guild.members.map(member => ({ name: member.user.username, id: member.user.id, joinedAt: member.joinedTimestamp}))).sort((first, second) => (first.joinedAt < second.joinedAt) ? -1 : (first.joinedAt > second.joinedAt) ? 1 : 0 )).split(member.id).slice(0, 1).join("").split("\"id\"").length - 1
-  const newUser = new User({
+  const newUser = {
     _id: member.id,
     userInfo: {
         userID: member.id,
@@ -149,15 +122,16 @@ module.exports.newUser = async (member) => {
           cash: 0,
       },
     }]
-  },{ strict: false })
-  newUser.save()
+  }
+  userDatabase[member.id] = newUser;
+  fs.writeFile('./Database/users.json', JSON.stringify(userDatabase), function(err) {if(err) return console.error(err);});
+
 }
 
 
 module.exports.addGuild = async (member) => {
   let position = JSON.stringify(Object.values(member.guild.members.map(member => ({ name: member.user.username, id: member.user.id, joinedAt: member.joinedTimestamp}))).sort((first, second) => (first.joinedAt < second.joinedAt) ? -1 : (first.joinedAt > second.joinedAt) ? 1 : 0 )).split(member.id).slice(0, 1).join("").split("\"id\"").length - 1
-  User.findOneAndUpdate({_id: member.id, "userInfo.userID": member.id},{
-    $push : {
+    const addedGuild = {
       "guilds": {
         _id: member.guild.id,
         guildID: member.guild.id,
@@ -168,8 +142,6 @@ module.exports.addGuild = async (member) => {
         },
       }
     }
-  },(err, res) =>{
-    if(err) console.log(err)
-  }, { strict: false })
-  User.save
+    userDatabase[member.id].guilds.push(addedGuild);
+    fs.writeFile('./Database/users.json', JSON.stringify(userDatabase), function(err) {if(err) return console.error(err);});
 }

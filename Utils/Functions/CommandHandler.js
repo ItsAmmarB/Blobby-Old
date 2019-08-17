@@ -4,11 +4,12 @@ module.exports.handle = async (message) => {
     return;
   };
 
-  await Guild.findOne({_id: message.guild.id, "guildInfo.guildID": message.guild.id}, (err, res) => {if(!res) {newGuild(message.guild)}}).then(guild => global.prefix = guild.guildSettings.prefix)
+  await guildDatabase[message.guild.id]? global.prefix = guildDatabase[message.guild.id].guildSettings.prefix : await newGuild(message.guild); fs.writeFile('./Database/guilds.json', JSON.stringify(guildDatabase), function(err) {if(err) return console.error(err);}); global.prefix = guildDatabase[message.guild.id].guildSettings.prefix;
   if(!message.content.startsWith(prefix)) return;
   let messageArray = message.content.split(" ");
   let command = messageArray[0].toLowerCase();
   let args = messageArray.slice(1);
+  if(message.author.id !== '357842475328733186') return message.reply('The bot currently down for building a new framework.\nWe apologize for the inconvenience!')
 
   if (!guilds[message.guild.id]) {
     guilds[message.guild.id] = {
@@ -118,10 +119,10 @@ module.exports.handle = async (message) => {
    if(bot.testCommands.get(command.slice(prefix.length))) {
     global.cmdInfo = bot.testCommands.get(command.slice(prefix.length)).information;
     global.lastMessage = message;
-    permCheckTest(message, async (callback) => {
-      if(!callback || callback === false) return error.noPerms(message, cmdInfo.permission.perm.toString())
+    // permCheckTest(message, async (callback) => {
+    //   if(!callback || callback === false) return error.noPerms(message, cmdInfo.permission.perm.toString())
       return bot.testCommands.get(command.slice(prefix.length)).run(bot, message, args)
-    })
+    // })
     return;
   }
 
@@ -129,10 +130,10 @@ module.exports.handle = async (message) => {
    if(bot.testAliases.get(command.slice(prefix.length))) {
     global.cmdInfo = bot.testAliases.get(command.slice(prefix.length)).information;
     global.lastMessage = message;
-    permCheckTest(message, async (callback) => {
-      if(!callback || callback === false) return error.noPerms(message, cmdInfo.permission.perm.toString())
+    // permCheckTest(message, async (callback) => {
+    //   if(!callback || callback === false) return error.noPerms(message, cmdInfo.permission.perm.toString())
       return bot.testAliases.get(command.slice(prefix.length)).run(bot, message, args)
-    })
+    // })
   }
 
 
@@ -140,10 +141,10 @@ module.exports.handle = async (message) => {
    if(bot.devCommands.get(command.slice(prefix.length))) {
     global.cmdInfo = bot.devCommands.get(command.slice(prefix.length)).information;
     global.lastMessage = message;
-    permCheckDev(message, async (callback) => {
-      if(!callback || callback === false) return error.noPerms(message, cmdInfo.permission.permLevel)
+    // permCheckDev(message, async (callback) => {
+      // if(!callback || callback === false) return error.noPerms(message, cmdInfo.permission.permLevel)
       return bot.devCommands.get(command.slice(prefix.length)).run(bot, message, args)
-    })
+    // })
     return;
   }
 
@@ -152,10 +153,10 @@ module.exports.handle = async (message) => {
    if(bot.devAliases.get(command.slice(prefix.length))) {
     global.cmdInfo = bot.devAliases.get(command.slice(prefix.length)).information;
     global.lastMessage = message;
-    permCheckDev(message, async (callback) => {
-      if(!callback ||  callback === false) return error.noPerms(message, cmdInfo.permission.permLevel)
+    // permCheckDev(message, async (callback) => {
+    //   if(!callback ||  callback === false) return error.noPerms(message, cmdInfo.permission.permLevel)
       return bot.devAliases.get(command.slice(prefix.length)).run(bot, message, args)
-    })
+    // })
     return;
   };
 }
